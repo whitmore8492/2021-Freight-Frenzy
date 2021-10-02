@@ -12,14 +12,14 @@ public class DriveTrain extends BaseHardware {
 
     //for truning this is the tolerance of trun in degrees
     public static final int DRIVETRAIN_GyroHeadingTol = 3;
-    public static final int DRIVETRAIN_ticsPerRev = Settings.REV_HD_40_MOTOR_TICKS_PER_REV;
-    public static final double DRIVETRAIN_wheelDistPerRev = 2 * 3.14159;
+    public static final int DRIVETRAIN_ticsPerRev = Settings.REV_HD_20_MOTOR_TICKS_PER_REV;
+    public static final double DRIVETRAIN_wheelDistPerRev = 4 * 3.14159;
 
-    public static final double DRIVETRAIN_gearRatio = 80.0 / 40.0;
+    public static final double DRIVETRAIN_gearRatio = 40.0 / 40.0;
     public static final double DRIVETRAIN_ticsPerInch = DRIVETRAIN_ticsPerRev / DRIVETRAIN_wheelDistPerRev / DRIVETRAIN_gearRatio;
     public static final double DRIVETRAIN_DriveTolerInches = .25;
     public static final double DRIVETRAIN_TURBOSPEED = 1.0;
-    public static final double DRIVETRAIN_SLOWSPEED = .75;
+    public static final double DRIVETRAIN_SLOWSPEED = .25;
     public static final double DRIVETRAIN_TURNSPEED = .50;
 
     // naj set constant for Gyro KP for driving straight
