@@ -2,6 +2,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.teamcode.hardware.DriveTrain;
 import org.firstinspires.ftc.teamcode.hardware.RobotComp;
@@ -120,15 +121,15 @@ public class Tele_Op extends OpMode {
             //robot.subPushers.cmdMoveAllUp();
         }
 
-        // Bumpers high and lower Powers for the wheels
+        // Bumpers high and lower Powers for the wheels,
         if (CommonLogic.oneShot(gamepad1.left_bumper, gp1_prev_left_bumper)) {
             robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_TURBOSPEED);
         }
-
+        RobotLog.aa(TAGTeleop,"GamepadLB: " + gamepad1.left_bumper);
         if (CommonLogic.oneShot(gamepad1.right_bumper, gp1_prev_right_bumper)) {
             robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_SLOWSPEED);
         }
-
+        RobotLog.aa(TAGTeleop,"GamepadRB: " + gamepad1.right_bumper);
         //***********  Grabbers
         if (CommonLogic.oneShot(gamepad1.dpad_right, gp1_prev_dpad_right)) {
             //if (RBTChassis.subGrabbers.getIsUpRight()) {

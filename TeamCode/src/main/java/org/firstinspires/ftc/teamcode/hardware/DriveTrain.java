@@ -20,7 +20,7 @@ public class DriveTrain extends BaseHardware {
     public static final double DRIVETRAIN_DriveTolerInches = .25;
     public static final double DRIVETRAIN_TURBOSPEED = 1.0;
     public static final double DRIVETRAIN_SLOWSPEED = .25;
-    public static final double DRIVETRAIN_TURNSPEED = .50;
+    public static final double DRIVETRAIN_TURNSPEED = .25;
 
     // naj set constant for Gyro KP for driving straight
     public static final double chassis_KPGyroStraight = 0.02;
@@ -180,7 +180,7 @@ public class DriveTrain extends BaseHardware {
         // Show the elapsed game time and wheel power.
         // telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.update();
-        // RobotLog.aa(TAGChassis,"Stage: "+ CurrentStage );
+         RobotLog.aa(TAGChassis,"Stage: "+ drivetrain_mode_Current );
         //RobotLog.aa(TAGChassis, "Runtime: " + runtime.seconds());
         //double inchesTraveled = Math.abs(getEncoderInches());
         //RobotLog.aa(TAGChassis, "loop targetinches: " + Math.abs(TargetDistanceInches - Chassis_DriveTolerInches));
@@ -246,6 +246,8 @@ public class DriveTrain extends BaseHardware {
 
         RobotLog.aa(TAGChassis, "delta: " + delta);
         RobotLog.aa(TAGChassis, "leftpower: " + leftPower + " right " + rightPower);
+        RobotLog.aa(TAGChassis, "Target Inches: " + Math.abs(TargetDistanceInches - DRIVETRAIN_DriveTolerInches));
+
 
         LDM1.setPower(leftPower);
         LDM2.setPower(leftPower);
@@ -254,7 +256,7 @@ public class DriveTrain extends BaseHardware {
 
         //check if we've gone far enough, if so stop and mark task complete
         double inchesTraveled = Math.abs(getEncoderInches());
-
+        RobotLog.aa(TAGChassis, "Inches Traveled: " + inchesTraveled);
         if (inchesTraveled >= Math.abs(TargetDistanceInches - DRIVETRAIN_DriveTolerInches)) {
             RobotLog.aa(TAGChassis, "Target Inches: " + Math.abs(TargetDistanceInches - DRIVETRAIN_DriveTolerInches));
             RobotLog.aa(TAGChassis, "Inches Traveled: " + inchesTraveled);
