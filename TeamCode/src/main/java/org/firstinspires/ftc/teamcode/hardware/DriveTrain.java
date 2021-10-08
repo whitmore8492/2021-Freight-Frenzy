@@ -19,6 +19,7 @@ public class DriveTrain extends BaseHardware {
     public static final double DRIVETRAIN_ticsPerInch = DRIVETRAIN_ticsPerRev / DRIVETRAIN_wheelDistPerRev / DRIVETRAIN_gearRatio;
     public static final double DRIVETRAIN_DriveTolerInches = .25;
     public static final double DRIVETRAIN_TURBOSPEED = 1.0;
+    public static final double DRIVETRAIN_NORMALSPEED = .5;
     public static final double DRIVETRAIN_SLOWSPEED = .25;
     public static final double DRIVETRAIN_TURNSPEED = .25;
 
@@ -42,6 +43,7 @@ public class DriveTrain extends BaseHardware {
     private int TargetHeadingDeg = 0;
     private double TargetDistanceInches = 0.0;
     private double maxPower = 1.0;
+    private double minPower = -1.0;
 
     //*********************************************************************************************
     /*
@@ -193,12 +195,13 @@ public class DriveTrain extends BaseHardware {
         drivetrain_mode_Current = Mode.TELEOP;
 
         //Cap the power limit for the wheels
-        double lPower = CommonLogic.CapMotorPower(TargetMotorPowerLeft,
-                Settings.REV_MIN_POWER, Settings.REV_MAX_POWER);
+       double lPower = CommonLogic.CapMotorPower(TargetMotorPowerLeft,
+                minPower, maxPower);
 
         //Cap the power limit for the wheels
         double rPower = CommonLogic.CapMotorPower(TargetMotorPowerRight,
-                Settings.REV_MIN_POWER, Settings.REV_MAX_POWER);
+                minPower, maxPower);
+
 
         LDM1.setPower(lPower);
         RDM1.setPower(rPower);
@@ -376,7 +379,9 @@ public class DriveTrain extends BaseHardware {
 
     //*********************************************************************************************
     public void setMaxPower(double newMax) {
+
         this.maxPower = Math.abs(newMax);
+        this.minPower = Math.abs(newMax)* -1;
     }
 
     public enum Mode {

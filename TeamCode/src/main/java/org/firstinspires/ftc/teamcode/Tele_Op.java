@@ -64,7 +64,7 @@ public class Tele_Op extends OpMode {
 
         robot.hardwareMap = hardwareMap;
         robot.telemetry = telemetry;
-        robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_TURBOSPEED);
+        robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_NORMALSPEED);
         robot.init();
 
         // Initialize the hardware variables. Note that the strings used here as parameters
@@ -105,7 +105,7 @@ public class Tele_Op extends OpMode {
     @Override
     public void loop() {
         robot.loop();
-
+        write2Log();
 
         //***********   Gamepad 1 controls ********
         robot.driveTrain.cmdTeleOp(CommonLogic.joyStickMath(-gamepad1.left_stick_y),
@@ -122,14 +122,28 @@ public class Tele_Op extends OpMode {
         }
 
         // Bumpers high and lower Powers for the wheels,
-        if (CommonLogic.oneShot(gamepad1.left_bumper, gp1_prev_left_bumper)) {
+        /*if (CommonLogic.oneShot(gamepad1.left_bumper, gp1_prev_left_bumper)) {
             robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_TURBOSPEED);
-        }
-        RobotLog.aa(TAGTeleop,"GamepadLB: " + gamepad1.left_bumper);
-        if (CommonLogic.oneShot(gamepad1.right_bumper, gp1_prev_right_bumper)) {
+        }*/
+        if (gamepad1.left_bumper) {
             robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_SLOWSPEED);
+            RobotLog.aa(TAGTeleop, "GamepadLB: " + gamepad1.left_bumper);
+        } else
+        {
+            robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_NORMALSPEED);
         }
-        RobotLog.aa(TAGTeleop,"GamepadRB: " + gamepad1.right_bumper);
+
+        /*if (CommonLogic.oneShot(gamepad1.right_bumper, gp1_prev_right_bumper)) {
+            robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_SLOWSPEED);
+        }*/
+        if (gamepad1.right_bumper) {
+            robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_TURBOSPEED);
+            RobotLog.aa(TAGTeleop,"GamepadRB: " + gamepad1.right_bumper);
+        } else
+        {
+            robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_NORMALSPEED);
+        }
+
         //***********  Grabbers
         if (CommonLogic.oneShot(gamepad1.dpad_right, gp1_prev_dpad_right)) {
             //if (RBTChassis.subGrabbers.getIsUpRight()) {
@@ -240,5 +254,34 @@ public class Tele_Op extends OpMode {
     }
 
     //*********************************************************************************************
+private void  write2Log() {
+
+//
+//    RobotLog.aa(TAGTeleop, " gp1_prev_a : " + gp1_prev_a);
+//    RobotLog.aa(TAGTeleop, " gp1_prev_b : " + gp1_prev_b);
+//    RobotLog.aa(TAGTeleop, " gp1_prev_x : " + gp1_prev_x);
+//    RobotLog.aa(TAGTeleop, " gp1_prev_y : " + gp1_prev_y);
+    RobotLog.aa(TAGTeleop, " gp1_prev_right_bumper : " + gp1_prev_right_bumper);
+   RobotLog.aa(TAGTeleop, " gp1_prev_left_bumper : " + gp1_prev_left_bumper);
+//    RobotLog.aa(TAGTeleop, " gp1_prev_dpad_up : " + gp1_prev_dpad_up);
+//    RobotLog.aa(TAGTeleop, " gp1_prev_dpad_down : " + gp1_prev_dpad_down);
+//    RobotLog.aa(TAGTeleop, " gp1_prev_dpad_left : " + gp1_prev_dpad_left);
+//    RobotLog.aa(TAGTeleop, " gp1_prev_dpad_right : " + gp1_prev_dpad_right);
+//
+//    RobotLog.aa(TAGTeleop, " gp2_prev_a : " + gp2_prev_a);
+//    RobotLog.aa(TAGTeleop, " gp2_prev_b : " + gp2_prev_b);
+//    RobotLog.aa(TAGTeleop, " gp2_prev_x : " + gp2_prev_x);
+//    RobotLog.aa(TAGTeleop, " gp2_prev_y : " + gp2_prev_y);
+//    RobotLog.aa(TAGTeleop, " gp2_prev_right_bumper : " + gp2_prev_right_bumper);
+//    RobotLog.aa(TAGTeleop, " gp2_prev_left_bumper : " + gp2_prev_left_bumper);
+//    RobotLog.aa(TAGTeleop, " gp2_prev_dpad_up : " + gp2_prev_dpad_up);
+//    RobotLog.aa(TAGTeleop, " gp2_prev_dpad_down : " + gp2_prev_dpad_down);
+//    RobotLog.aa(TAGTeleop, " gp2_prev_dpad_left : " + gp2_prev_dpad_left);
+//    RobotLog.aa(TAGTeleop, " gp2_prev_dpad_right : " + gp2_prev_dpad_right);
+//
+//
+
+}
+
 }
 
