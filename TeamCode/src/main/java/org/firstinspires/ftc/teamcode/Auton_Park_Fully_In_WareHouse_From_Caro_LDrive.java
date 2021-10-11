@@ -95,7 +95,7 @@ public class Auton_Park_Fully_In_WareHouse_From_Caro_LDrive extends OpMode {
         }
 
         if (currentStage == stage._10_Drive_Out) {
-            robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_SLOW_SPEED, 0, 28.5);
+            robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_SLOW_SPEED, 0, 25);
             currentStage = stage._20_Turn;
         }
         RobotLog.aa(RTAG,"stage: " + currentStage);

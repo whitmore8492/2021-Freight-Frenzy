@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.RobotLog;
 
 public class Sweeper extends BaseHardware {
 
     private static final String TAGSweeper = "8492-Sweeper";
 
 
-    public static final double Sweeper_SPEED = .25;
+    public static final double Sweeper_SPEED = .70;
 
     private Sweeper.Mode Sweeper_mode_Current = Sweeper.Mode.UNKNOWN;
 
@@ -36,12 +37,15 @@ public class Sweeper extends BaseHardware {
 
     public void loop() {
 
-        if (Sweeper_mode_Current == Mode.Run)
-        Sweepermotor.setPower(Sweeper_SPEED);
-
-        if (Sweeper_mode_Current == Mode.STOPPED){
-            Sweepermotor.setPower(0);
+        if (Sweeper_mode_Current == Mode.RUN) {
+            Sweepermotor.setPower(Sweeper_SPEED);
+            RobotLog.aa(TAGSweeper, " Sweeper mode " + Sweeper_mode_Current);
         }
+
+            if (Sweeper_mode_Current == Mode.STOPPED) {
+                Sweepermotor.setPower(0);
+                RobotLog.aa(TAGSweeper, " Sweeper mode " + Sweeper_mode_Current);
+            }
     }
 
     public void stop() {
@@ -49,16 +53,19 @@ public class Sweeper extends BaseHardware {
     }
 
     public void cmdSweeperRun(){
-        Sweeper_mode_Current = Mode.Run;
+        Sweeper_mode_Current = Mode.RUN;
     }
 
     public void cmdSweeperSTOPPED(){
         Sweeper_mode_Current = Mode.STOPPED;
     }
+    public String cmdCurrentMode(){
+        return Sweeper_mode_Current.name();
+    }
 
     public enum Mode {
         STOPPED,
-        Run,
+        RUN,
         UNKNOWN
     }
 }
