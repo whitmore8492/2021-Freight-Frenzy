@@ -184,7 +184,13 @@ public class Tele_Op extends OpMode {
             //if (robot.subGripper.getIsOpen()) {
             //    robot.subGripper.cmd_close();
             //}
+            robot.carousel.cmdCarouselRun_RED();
+
+
         }
+
+
+
 
         if (CommonLogic.oneShot(gamepad2.right_bumper, gp2_prev_right_bumper)) {
             //if (robot.subGripper.getIsClosed()) {
@@ -205,6 +211,7 @@ public class Tele_Op extends OpMode {
 
         if (CommonLogic.oneShot(gamepad2.a, gp2_prev_a)) {
             //robot.subExtender.decPositionIndex();
+            robot.carousel.cmdCarouselSTOPPED();
         }
 
         if (CommonLogic.oneShot(gamepad2.b, gp2_prev_b)) {
@@ -254,6 +261,7 @@ public class Tele_Op extends OpMode {
         gp2_prev_dpad_left = gamepad2.dpad_left;
         gp2_prev_dpad_up = gamepad2.dpad_up;
         gp2_prev_dpad_right = gamepad2.dpad_right;
+
 
     }
 
