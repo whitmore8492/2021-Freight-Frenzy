@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.RobotLog;
 
@@ -13,10 +14,10 @@ public class Carousel extends BaseHardware {
 
     public static final double CAROUSEL_gearRatio = 40.0 / 40.0;
     public static final double CAROUSEL_ticsPerInch = CAROUSEL_ticsPerRev / CAROUSEL_wheelDistPerRev / CAROUSEL_gearRatio;
-    public static final double CAROUSEL_spin = 15 * 3.14159 * CAROUSEL_ticsPerInch;
+    public static final double CAROUSEL_spin = 1.25 * 15 * 3.14159 * CAROUSEL_ticsPerInch;
     public static final double Carousel_SPEED = .70;
 
-    private Carousel.Mode Carousel_mode_Current = Carousel.Mode.UNKNOWN;
+    private Carousel.Mode Carousel_mode_Current = Mode.STOPPED;
 
     private DcMotor Carouselmotor = null;
     private double TargetMotorPowerCarousel = 0.0;
@@ -31,8 +32,10 @@ public class Carousel extends BaseHardware {
 
             Carouselmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             Carouselmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            Carouselmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            Carouselmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            //Carouselmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+           // Carouselmotor.setPower(0);
+           // Carouselmotor.setTargetPosition(0);
+
 
         }
     }
@@ -47,27 +50,32 @@ public class Carousel extends BaseHardware {
 
     public void loop() {
 
-        if (Carouselmotor.getCurrentPosition() == Carouselmotor.getTargetPosition()){
-            Carousel_mode_Current = Mode.STOPPED;
-        }
+        // if (Carouselmotor.getCurrentPosition() == Carouselmotor.getTargetPosition()){
+
         if (Carousel_mode_Current == Mode.RUN_RED) {
-            Carouselmotor.setPower(Carousel_SPEED);
             Carouselmotor.setTargetPosition((int) CAROUSEL_spin);
+            Carouselmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Carouselmotor.setPower(Carousel_SPEED);
             RobotLog.aa(TAGCarousel, " Carousel mode " + Carousel_mode_Current);
         }
         if (Carousel_mode_Current == Mode.RUN_BLUE) {
-            Carouselmotor.setPower(-Carousel_SPEED);
-            Carouselmotor.setTargetPosition((int) -CAROUSEL_spin);
 
+            Carouselmotor.setTargetPosition((int) -CAROUSEL_spin);
+            Carouselmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Carouselmotor.setPower(-Carousel_SPEED);
             RobotLog.aa(TAGCarousel, " Carousel mode " + Carousel_mode_Current);
         }
-
+        if (!Carouselmotor.isBusy()){
+            Carousel_mode_Current = Mode.STOPPED;
+        }
         if (Carousel_mode_Current == Mode.STOPPED) {
                 Carouselmotor.setPower(0);
                 Carouselmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                Carouselmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                //Carouselmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 RobotLog.aa(TAGCarousel, " Carousel mode " + Carousel_mode_Current);
             }
+
+
     }
 
     public void stop() {

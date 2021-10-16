@@ -186,6 +186,7 @@ public class Tele_Op extends OpMode {
             //}
             robot.carousel.cmdCarouselRun_RED();
 
+            RobotLog.aa(TAGTeleop, " gp2_prev_left_bumper : " + gp2_prev_left_bumper);
 
         }
 
@@ -295,7 +296,7 @@ private void  write2Log() {
 //    RobotLog.aa(TAGTeleop, " gp2_prev_b : " + gp2_prev_b);
 //    RobotLog.aa(TAGTeleop, " gp2_prev_x : " + gp2_prev_x);
 //    RobotLog.aa(TAGTeleop, " gp2_prev_y : " + gp2_prev_y);
-    RobotLog.aa(TAGTeleop, " gp2_prev_right_bumper : " + gp2_prev_right_bumper);
+//    RobotLog.aa(TAGTeleop, " gp2_prev_right_bumper : " + gp2_prev_right_bumper);
 //    RobotLog.aa(TAGTeleop, " gp2_prev_left_bumper : " + gp2_prev_left_bumper);
 //    RobotLog.aa(TAGTeleop, " gp2_prev_dpad_up : " + gp2_prev_dpad_up);
 //    RobotLog.aa(TAGTeleop, " gp2_prev_dpad_down : " + gp2_prev_dpad_down);
