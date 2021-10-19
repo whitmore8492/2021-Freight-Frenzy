@@ -32,9 +32,7 @@ public class Carousel extends BaseHardware {
 
             Carouselmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             Carouselmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            //Carouselmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-           // Carouselmotor.setPower(0);
-           // Carouselmotor.setTargetPosition(0);
+
 
 
         }
@@ -71,7 +69,6 @@ public class Carousel extends BaseHardware {
         if (Carousel_mode_Current == Mode.STOPPED) {
                 Carouselmotor.setPower(0);
                 Carouselmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                //Carouselmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 RobotLog.aa(TAGCarousel, " Carousel mode " + Carousel_mode_Current);
             }
 

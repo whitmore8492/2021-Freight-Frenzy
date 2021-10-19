@@ -116,10 +116,12 @@ public class Tele_Op extends OpMode {
         //***********   Pushers
         if (CommonLogic.oneShot(gamepad1.a, gp1_prev_a)) {
             //robot.subPushers.cmdMoveAllDown();
+            robot.carousel.cmdCarouselRun_RED();
         }
 
         if (CommonLogic.oneShot(gamepad1.b, gp1_prev_b)) {
             //robot.subPushers.cmdMoveAllUp();
+            robot.carousel.cmdCarouselSTOPPED();
         }
 
         // Bumpers high and lower Powers for the wheels,
@@ -163,6 +165,7 @@ public class Tele_Op extends OpMode {
             // if (RBTChassis.subGrabbers.getIsDownRight()) {
             //robot.subGrabbers.cmdMoveUpRight();
             //}
+
         }
 
         if (CommonLogic.oneShot(gamepad1.dpad_left, gp1_prev_dpad_left)) {
@@ -233,10 +236,12 @@ public class Tele_Op extends OpMode {
 
         if (CommonLogic.oneShot(gamepad2.dpad_up, gp2_prev_dpad_up)) {
             //robot.subLifter.incPositionIndex();
+            robot.arm_rotator.cmdArmRotatePos_CAROUSEL();
         }
 
         if (CommonLogic.oneShot(gamepad2.dpad_down, gp2_prev_dpad_down)) {
             //robot.subLifter.decPositionIndex();
+            robot.arm_rotator.cmdCarouselRun_INTAKE();
         }
 
         // Update the previous status for gamepad1
@@ -298,8 +303,8 @@ private void  write2Log() {
 //    RobotLog.aa(TAGTeleop, " gp2_prev_y : " + gp2_prev_y);
 //    RobotLog.aa(TAGTeleop, " gp2_prev_right_bumper : " + gp2_prev_right_bumper);
 //    RobotLog.aa(TAGTeleop, " gp2_prev_left_bumper : " + gp2_prev_left_bumper);
-//    RobotLog.aa(TAGTeleop, " gp2_prev_dpad_up : " + gp2_prev_dpad_up);
-//    RobotLog.aa(TAGTeleop, " gp2_prev_dpad_down : " + gp2_prev_dpad_down);
+   RobotLog.aa(TAGTeleop, " gp2_prev_dpad_up : " + gp2_prev_dpad_up);
+    RobotLog.aa(TAGTeleop, " gp2_prev_dpad_down : " + gp2_prev_dpad_down);
 //    RobotLog.aa(TAGTeleop, " gp2_prev_dpad_left : " + gp2_prev_dpad_left);
 //    RobotLog.aa(TAGTeleop, " gp2_prev_dpad_right : " + gp2_prev_dpad_right);
 //
