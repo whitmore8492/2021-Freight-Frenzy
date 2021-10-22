@@ -215,19 +215,22 @@ public class Tele_Op extends OpMode {
 
         if (CommonLogic.oneShot(gamepad2.a, gp2_prev_a)) {
             //robot.subExtender.decPositionIndex();
-            robot.carousel.cmdCarouselSTOPPED();
+           robot.delivery.cmdDeliveryRun_RECEIVE();
         }
 
         if (CommonLogic.oneShot(gamepad2.b, gp2_prev_b)) {
             //robot.subLeg.pick();
+            robot.delivery.cmdDeliveryRun_LOWER();
         }
 
         if (CommonLogic.oneShot(gamepad2.y, gp2_prev_y)) {
             //robot.subExtender.incPositionIndex();
+            robot.delivery.cmdDeliveryRun_HIGH();
         }
 
         if (CommonLogic.oneShot(gamepad2.x, gp2_prev_x)) {
             //robot.subLeg.place();
+            robot.delivery.cmdDeliveryRun_MIDDLE();
         }
 
         if (Math.abs(gamepad2.left_stick_y) > Settings.JOYSTICK_DEADBAND_STICK) {
@@ -242,6 +245,21 @@ public class Tele_Op extends OpMode {
         if (CommonLogic.oneShot(gamepad2.dpad_down, gp2_prev_dpad_down)) {
             //robot.subLifter.decPositionIndex();
             robot.arm_rotator.cmdCarouselRun_INTAKE();
+        }
+        if (CommonLogic.oneShot(gamepad2.dpad_right, gp2_prev_dpad_right)) {
+            //robot.subLifter.decPositionIndex();
+            robot.sweeper.cmdSweeperSTOPPED();
+            robot.delivery.cmdDeliveryRun_CARRY();
+        }
+
+        if (CommonLogic.oneShot(gamepad2.dpad_left, gp2_prev_dpad_left)) {
+            //robot.subLifter.decPositionIndex();
+            robot.carousel.cmdCarouselSTOPPED();
+            robot.delivery.cmdDeliveryRun_STOP();
+        }
+
+        if (gamepad2.right_trigger > .8){
+            robot.delivery.cmdDeliveryRun_DROP();
         }
 
         // Update the previous status for gamepad1

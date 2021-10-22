@@ -8,6 +8,7 @@ public class RobotComp extends BaseHardware{
     public Sweeper sweeper = new Sweeper();
     public Carousel carousel = new Carousel();
     public Arm_Rotator arm_rotator = new Arm_Rotator();
+    public Delivery delivery = new Delivery();
     @Override
     public void init (){
         // Must set Hardware Map and telemetry before calling init
@@ -27,6 +28,9 @@ public class RobotComp extends BaseHardware{
         arm_rotator.telemetry = this.telemetry;
         arm_rotator.init();
 
+        delivery.hardwareMap = this.hardwareMap;
+        delivery.telemetry = this.telemetry;
+        delivery.init();
     }
     @Override
     public void init_loop() {
@@ -34,6 +38,7 @@ public class RobotComp extends BaseHardware{
         sweeper.init_loop();
         carousel.init_loop();
         arm_rotator.init_loop();
+        delivery.init_loop();
     }
     @Override
     public void start () {
@@ -41,6 +46,7 @@ public class RobotComp extends BaseHardware{
         sweeper.start();
         carousel.start();
         arm_rotator.start();
+        delivery.start();
     }
     @Override
     public void loop() {
@@ -48,6 +54,7 @@ public class RobotComp extends BaseHardware{
         sweeper.loop();
         carousel.loop();
         arm_rotator.loop();
+        delivery.loop();
     }
 
     @Override
@@ -56,5 +63,6 @@ public class RobotComp extends BaseHardware{
         sweeper.stop();
         carousel.stop();
         arm_rotator.stop();
+        delivery.stop();
     }
 }
