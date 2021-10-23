@@ -10,8 +10,8 @@ public class Arm_Rotator extends BaseHardware {
 
     private static final String TAGCarousel = "8492-Arm_Rotator";
 
-    private static final double CAROUSEL_POS = .88;
-    private static final double INTAKE_POS = .22;
+    private static final double CAROUSEL_POS = 1;
+    private static final double INTAKE_POS = 0;
     private Arm_Rotator.Mode Arm_Rotator_mode_Current = Mode.CAROUSEL;
 
     private Servo Arm_Rotator_servo = null;

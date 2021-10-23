@@ -12,7 +12,7 @@ public class DriveTrain extends BaseHardware {
 
     //for truning this is the tolerance of trun in degrees
     public static final int DRIVETRAIN_GyroHeadingTol = 3;
-    public static final int DRIVETRAIN_ticsPerRev = Settings.REV_HD_20_MOTOR_TICKS_PER_REV;
+    public static final int DRIVETRAIN_ticsPerRev = Settings.REV_HD_40_MOTOR_TICKS_PER_REV;
     public static final double DRIVETRAIN_wheelDistPerRev = 4 * 3.14159;
 
     public static final double DRIVETRAIN_gearRatio = 40.0 / 40.0;

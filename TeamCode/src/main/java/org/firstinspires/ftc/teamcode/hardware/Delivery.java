@@ -16,30 +16,30 @@ public class Delivery extends BaseHardware {
     public static final double TRACK_gearRatio = 40.0 / 40.0;
     public static final double TRACK_ticsPerInch = TRACK_ticsPerRev / TRACK_wheelDistPerRev / TRACK_gearRatio;
     public static final double TRACK_spin = 1.25 * 15 * 3.14159 * TRACK_ticsPerInch;
-    public static final double TRACK_SPEED = .70;
+    public static final double TRACK_SPEED = .40;
 
     public static final int ROTATE_ticsPerRev = Settings.REV_HD_40_MOTOR_TICKS_PER_REV;
     public static final double ROTATE_wheelDistPerRev = 2 * 3.14159;
     public static final double ROTATE_gearRatio = 40.0 / 40.0;
     public static final double ROTATE_ticsPerInch = ROTATE_ticsPerRev / ROTATE_wheelDistPerRev / ROTATE_gearRatio;
     public static final double ROTATE_spin = 1.25 * 15 * 3.14159 * ROTATE_ticsPerInch;
-    public static final double ROTATE_SPEED = .70;
+    public static final double ROTATE_SPEED = .30;
 
 public static final int TCARRY_POS = 0;
-public static final int TLOAD_POS = -100;
-public static final int TLOW_POS = 100;
-public static final int TMIDDLE_POS =200   ;
-public static final int THIGH_POS =300  ;
+public static final int TLOAD_POS = -1200;
+public static final int TLOW_POS = 1261;
+public static final int TMIDDLE_POS =2226   ;
+public static final int THIGH_POS =2226  ;
 
 public static final int RRECEIVE_POS = 0;
-public static final int RCARRY_POS = 100;
-public static final int RDROP_POS = 200;
+public static final int RCARRY_POS = -18;
+public static final int RDROP_POS = -145;
 
-public static final double OCATCH_POS = 0.3;
-public static final double OCLOSE_POS = 0;
-public static final double ODROP_POS = 0.7;
+public static final double OCATCH_POS = 0.5;
+public static final double OCLOSE_POS = 1;
+public static final double ODROP_POS = 0.5;
 
-    private Delivery.Mode DELIVERY_mode_Current = Mode.CARRY;
+    private Delivery.Mode DELIVERY_mode_Current = Mode.START;
 
     private DcMotor Trackmotor = null;
     private DcMotor Rotatemotor = null;
@@ -80,10 +80,12 @@ public static final double ODROP_POS = 0.7;
         // if (Carouselmotor.getCurrentPosition() == Carouselmotor.getTargetPosition()){
 
         if (DELIVERY_mode_Current == Mode.START) {
-            MoveRotateMotor(RRECEIVE_POS);
-            MoveTrackMotor(TCARRY_POS);
+           // MoveRotateMotor(RRECEIVE_POS);
+           // MoveTrackMotor(TCARRY_POS);
             Openservo.setPosition(OCLOSE_POS);
             RobotLog.aa(TAGDelivery, " Delivery mode " + DELIVERY_mode_Current);
+            telemetry.log().add("Trackmotor tic count " + Trackmotor.getCurrentPosition());
+            telemetry.log().add("Rotatemotor tic count " + Rotatemotor.getCurrentPosition());
         }
 
         if (DELIVERY_mode_Current == Mode.DROP) {
