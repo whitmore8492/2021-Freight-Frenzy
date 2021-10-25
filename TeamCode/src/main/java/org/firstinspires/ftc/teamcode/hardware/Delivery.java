@@ -28,6 +28,7 @@ public class Delivery extends BaseHardware {
 public static final int TCARRY_POS = 0;
 public static final int TLOAD_POS = -1200;
 public static final int TLOW_POS = 1261;
+public static final int TSPIN_POS = 1720;
 public static final int TMIDDLE_POS =2226   ;
 public static final int THIGH_POS =2226  ;
 
@@ -102,7 +103,9 @@ public static final double ODROP_POS = 0.5;
 
         if (DELIVERY_mode_Current == Mode.CARRY) {
             MoveRotateMotor(RCARRY_POS);
+            if (Rotatemotor.getCurrentPosition() == RCARRY_POS){
             MoveTrackMotor(TCARRY_POS);
+            }
             Openservo.setPosition(OCLOSE_POS);
             RobotLog.aa(TAGDelivery, " Delivery mode " + DELIVERY_mode_Current);
         }
@@ -195,13 +198,21 @@ public static final double ODROP_POS = 0.5;
         }
     }
     private void MoveTrackMotor (int Position){
+
+
         Trackmotor.setTargetPosition(Position);
         Trackmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Trackmotor.setPower(GetMovePowerLevel(Position)*TRACK_SPEED);
     }
     private void MoveRotateMotor (int Position){
-        Rotatemotor.setTargetPosition(Position);
-        Rotatemotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Rotatemotor.setPower(GetMovePowerLevel(Position)*ROTATE_SPEED);
-    }
+        if((Rotatemotor.getCurrentPosition() >= -20) && (Position < -20)){
+            MoveTrackMotor(TSPIN_POS);
+            if(Trackmotor.getCurrentPosition() == TSPIN_POS){
+                Rotatemotor.setTargetPosition(Position);
+                Rotatemotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                Rotatemotor.setPower(GetMovePowerLevel(Position)*ROTATE_SPEED);
+            }
+        }
+
+        }
 }
