@@ -19,9 +19,9 @@ public class DriveTrain extends BaseHardware {
     public static final double DRIVETRAIN_ticsPerInch = DRIVETRAIN_ticsPerRev / DRIVETRAIN_wheelDistPerRev / DRIVETRAIN_gearRatio;
     public static final double DRIVETRAIN_DriveTolerInches = .25;
     public static final double DRIVETRAIN_TURBOSPEED = 1.0;
-    public static final double DRIVETRAIN_NORMALSPEED = .5;
+    public static final double DRIVETRAIN_NORMALSPEED = .75;
     public static final double DRIVETRAIN_SLOWSPEED = .25;
-    public static final double DRIVETRAIN_TURNSPEED = .25;
+    public static final double DRIVETRAIN_TURNSPEED = .4;
 
     // naj set constant for Gyro KP for driving straight
     public static final double chassis_KPGyroStraight = 0.02;

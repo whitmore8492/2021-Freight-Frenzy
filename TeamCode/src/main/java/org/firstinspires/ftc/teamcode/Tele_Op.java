@@ -128,11 +128,11 @@ public class Tele_Op extends OpMode {
         /*if (CommonLogic.oneShot(gamepad1.left_bumper, gp1_prev_left_bumper)) {
             robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_TURBOSPEED);
         }*/
-        if (gamepad1.left_bumper && !gamepad1.right_bumper) {
+        if ((gamepad1.left_trigger > .8) && (gamepad1.right_trigger < .8)) {
             robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_SLOWSPEED);
             RobotLog.aa(TAGTeleop, "GamepadLB: " + gamepad1.left_bumper);
             telemetry.addData (TAGTeleop, "GamepadLB: " + gamepad1.left_bumper);
-        } else if(!gamepad1.left_bumper && gamepad1.right_bumper)
+        } else if((gamepad1.left_trigger < .8) && (gamepad1.right_trigger > .8))
         {
             robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_TURBOSPEED);
             RobotLog.aa(TAGTeleop,"GamepadRB: " + gamepad1.right_bumper);
@@ -141,6 +141,7 @@ public class Tele_Op extends OpMode {
         }else {
             robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_NORMALSPEED);
         }
+
 
         /*if (CommonLogic.oneShot(gamepad1.right_bumper, gp1_prev_right_bumper)) {
             robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_SLOWSPEED);

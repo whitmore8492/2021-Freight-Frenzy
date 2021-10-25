@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.common.Settings;
 import org.firstinspires.ftc.teamcode.hardware.DriveTrain;
 import org.firstinspires.ftc.teamcode.hardware.RobotComp;
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "Tele_Op", group = "TeleOp")
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "B_Tele_Op", group = "TeleOp")
 //@Disabled
 public class B_Tele_Op extends OpMode {
     private static final String TAGTeleop = "8492-Teleop";
@@ -127,11 +127,11 @@ public class B_Tele_Op extends OpMode {
         /*if (CommonLogic.oneShot(gamepad1.left_bumper, gp1_prev_left_bumper)) {
             robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_TURBOSPEED);
         }*/
-        if (gamepad1.left_bumper && !gamepad1.right_bumper) {
+        if ((gamepad1.left_trigger > .8) && (gamepad1.right_trigger < .8)) {
             robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_SLOWSPEED);
             RobotLog.aa(TAGTeleop, "GamepadLB: " + gamepad1.left_bumper);
             telemetry.addData (TAGTeleop, "GamepadLB: " + gamepad1.left_bumper);
-        } else if(!gamepad1.left_bumper && gamepad1.right_bumper)
+        } else if((gamepad1.left_trigger < .8) && (gamepad1.right_trigger > .8))
         {
             robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_TURBOSPEED);
             RobotLog.aa(TAGTeleop,"GamepadRB: " + gamepad1.right_bumper);
