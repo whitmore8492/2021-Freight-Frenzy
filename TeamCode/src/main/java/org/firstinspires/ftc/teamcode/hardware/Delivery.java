@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.teamcode.common.Settings;
@@ -26,16 +27,17 @@ public class Delivery extends BaseHardware {
     public static final double ROTATE_SPEED = .30;
 
 public static final int TCARRY_POS = 0;
-public static final int TLOAD_POS = -1200;
-public static final int TLOW_POS = 1261;
-public static final int TSPIN_POS = 1720;
-public static final int TMIDDLE_POS =2226   ;
-public static final int THIGH_POS =2226  ;
+public static final int TLOAD_POS = 1027;
+public static final int TLOW_POS = -1630;
+public static final int TSPIN_POS = -1630;
+public static final int TMIDDLE_POS = -1630   ;
+public static final int THIGH_POS =-1630  ;
+public static final int HARD_STOP = 1200;
 
-public static final int RRECEIVE_POS = 0;
-public static final int RCARRY_POS = -18;
-public static final int RSAFETY_POS = RCARRY_POS - 4;
-public static final int RDROP_POS = -145;
+public static final int RRECEIVE_POS = 1;
+public static final int RCARRY_POS = 1;
+public static final int RSAFETY_POS = 1;
+public static final int RDROP_POS = 0;
 
 public static final double OCATCH_POS = 0.5;
 public static final double OCLOSE_POS = 1;
@@ -44,28 +46,29 @@ public static final double ODROP_POS = 0.5;
     private Delivery.Mode DELIVERY_mode_Current = Mode.START;
 
     private DcMotor Trackmotor = null;
-    private DcMotor Rotatemotor = null;
+    private Servo Rotateservo = null;
     private Servo Openservo = null;
 
-
+    private ElapsedTime runtime = new ElapsedTime();
+    private static final int WaitTime = 1500;
+    private boolean MoveRotateComplete = false;
 
     public void init(){
         Trackmotor = hardwareMap.dcMotor.get("TrackM");
-        Rotatemotor = hardwareMap.dcMotor.get("RotateM");
+        Rotateservo = hardwareMap.servo.get("RotateS");
         Openservo = hardwareMap.servo.get("OpenS");
 
         Trackmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Trackmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Rotatemotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Rotatemotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Rotateservo.setPosition(RRECEIVE_POS);
 
         Openservo.setPosition(OCLOSE_POS); // we need to set initial position
 
         if (Trackmotor == null) {
             telemetry.log().add("Trackmotor is null...");
         }
-        if (Rotatemotor == null) {
-            telemetry.log().add("Rotatemotor is null...");
+        if (Rotateservo == null) {
+            telemetry.log().add("Rotateservo is null...");
         }
     }
 
@@ -74,7 +77,7 @@ public static final double ODROP_POS = 0.5;
     }
 
     public void start() {
-
+    runtime.reset();
     }
 
     public void loop() {
@@ -84,10 +87,11 @@ public static final double ODROP_POS = 0.5;
         if (DELIVERY_mode_Current == Mode.START) {
            // MoveRotateMotor(RRECEIVE_POS);
            // MoveTrackMotor(TCARRY_POS);
+            Rotateservo.setPosition(RRECEIVE_POS);
             Openservo.setPosition(OCLOSE_POS);
             RobotLog.aa(TAGDelivery, " Delivery mode " + DELIVERY_mode_Current);
             telemetry.log().add("Trackmotor tic count " + Trackmotor.getCurrentPosition());
-            telemetry.log().add("Rotatemotor tic count " + Rotatemotor.getCurrentPosition());
+            telemetry.log().add("Rotateservo tic count " + Rotateservo.getPosition());
         }
 
         if (DELIVERY_mode_Current == Mode.DROP) {
@@ -96,45 +100,52 @@ public static final double ODROP_POS = 0.5;
         }
 
         if (DELIVERY_mode_Current == Mode.RECEIVE) {
-            MoveRotateMotor(RRECEIVE_POS);
-            if (Rotatemotor.getCurrentPosition() == RRECEIVE_POS){
+            MoveRotateServo(RRECEIVE_POS);
+            if (MoveRotateComplete && (runtime.milliseconds() > WaitTime)){
                 MoveTrackMotor(TLOAD_POS);
+                MoveRotateComplete = false;
             }
-            Openservo.setPosition(OCATCH_POS);
+            if (Trackmotor.getCurrentPosition() == TLOAD_POS ){
+        Openservo.setPosition(OCATCH_POS);}
+
             RobotLog.aa(TAGDelivery, " Delivery mode " + DELIVERY_mode_Current);
         }
 
         if (DELIVERY_mode_Current == Mode.CARRY) {
-            MoveRotateMotor(RCARRY_POS);
-            if (Rotatemotor.getCurrentPosition() == RCARRY_POS){
+            MoveRotateServo(RCARRY_POS);
+            if (MoveRotateComplete && (runtime.milliseconds() > WaitTime)){
             MoveTrackMotor(TCARRY_POS);
+            MoveRotateComplete = false;
             }
             Openservo.setPosition(OCLOSE_POS);
             RobotLog.aa(TAGDelivery, " Delivery mode " + DELIVERY_mode_Current);
         }
 
         if (DELIVERY_mode_Current == Mode.LOWER) {
-            MoveRotateMotor(RDROP_POS);
-            if (Rotatemotor.getCurrentPosition() == RDROP_POS){
+            MoveRotateServo(RDROP_POS);
+            if (MoveRotateComplete && (runtime.milliseconds() > WaitTime)){
                 MoveTrackMotor(TLOW_POS);
+                MoveRotateComplete = false;
             }
             Openservo.setPosition(OCLOSE_POS);
             RobotLog.aa(TAGDelivery, " Delivery mode " + DELIVERY_mode_Current);
         }
 
         if (DELIVERY_mode_Current == Mode.MIDDLE) {
-            MoveRotateMotor(RDROP_POS);
-            if (Rotatemotor.getCurrentPosition() == RDROP_POS){
+            MoveRotateServo(RDROP_POS);
+            if (MoveRotateComplete && (runtime.milliseconds() > WaitTime)){
                 MoveTrackMotor(TMIDDLE_POS);
+                MoveRotateComplete = false;
             }
             Openservo.setPosition(OCLOSE_POS);
             RobotLog.aa(TAGDelivery, " Delivery mode " + DELIVERY_mode_Current);
         }
 
         if (DELIVERY_mode_Current == Mode.HIGH) {
-            MoveRotateMotor(RDROP_POS);
-            if (Rotatemotor.getCurrentPosition() == RDROP_POS){
+            MoveRotateServo(RDROP_POS);
+            if (MoveRotateComplete && (runtime.milliseconds() > WaitTime)){
                 MoveTrackMotor(THIGH_POS);
+                MoveRotateComplete = false;
             }
             Openservo.setPosition(OCLOSE_POS);
             RobotLog.aa(TAGDelivery, " Delivery mode " + DELIVERY_mode_Current);
@@ -143,12 +154,9 @@ public static final double ODROP_POS = 0.5;
         if (Trackmotor.getCurrentPosition() == Trackmotor.getTargetPosition()){
             Trackmotor.setPower(0);
         }
-        if ( Rotatemotor.getCurrentPosition() ==  Rotatemotor.getTargetPosition()){
-            Rotatemotor.setPower(0);
-        }
+
         if (DELIVERY_mode_Current == Mode.STOPPED) {
                 Trackmotor.setPower(0);
-                Rotatemotor.setPower(0);
                 RobotLog.aa(TAGDelivery, " Carousel mode " + DELIVERY_mode_Current);
             }
 
@@ -194,7 +202,7 @@ public static final double ODROP_POS = 0.5;
         DROP,
     STOPPED
     }
-    private double GetMovePowerLevel(int TargetPos){
+    public double GetMovePowerLevel(int TargetPos){
         if (Trackmotor.getCurrentPosition() < TargetPos){
             return 1;
 
@@ -206,44 +214,27 @@ public static final double ODROP_POS = 0.5;
             return 0;
         }
     }
+
+    public int getTrackMotorPosition (){
+        return Trackmotor.getCurrentPosition();
+    }
     private void MoveTrackMotor (int Position){
-
-
         Trackmotor.setTargetPosition(Position);
         Trackmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Trackmotor.setPower(GetMovePowerLevel(Position)*TRACK_SPEED);
     }
-    private void MoveRotateMotor (int Position){
-        if ((Rotatemotor.getCurrentPosition() == RRECEIVE_POS) && (Position < RSAFETY_POS)){
-            MoveTrackMotor(TCARRY_POS);
-            if(Trackmotor.getCurrentPosition() == TCARRY_POS){
-                Rotatemotor.setTargetPosition(Position);
-                Rotatemotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                Rotatemotor.setPower(GetMovePowerLevel(Position)*ROTATE_SPEED);
-            }
-        } else if((Rotatemotor.getCurrentPosition() >= RSAFETY_POS) && (Position < RSAFETY_POS)){
+    private void MoveRotateServo (double Position){
+        //auto pivit if track above position x, do not rotate box**
+        if(Rotateservo.getPosition() != Position){
             MoveTrackMotor(TSPIN_POS);
             if(Trackmotor.getCurrentPosition() == TSPIN_POS){
-                Rotatemotor.setTargetPosition(Position);
-                Rotatemotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                Rotatemotor.setPower(GetMovePowerLevel(Position)*ROTATE_SPEED);
-            }
-        } else if ((Rotatemotor.getCurrentPosition() < RSAFETY_POS) && (Position >= RSAFETY_POS)){
-            MoveTrackMotor(TSPIN_POS);
-            if(Trackmotor.getCurrentPosition() == TSPIN_POS){
-                Rotatemotor.setTargetPosition(Position);
-                Rotatemotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                Rotatemotor.setPower(GetMovePowerLevel(Position)*ROTATE_SPEED);
-            }
-        }   else if ((Rotatemotor.getCurrentPosition() >= RSAFETY_POS) && (Position >= RSAFETY_POS)){
-            Rotatemotor.setTargetPosition(Position);
-            Rotatemotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            Rotatemotor.setPower(GetMovePowerLevel(Position)*ROTATE_SPEED);
-        } else if ((Rotatemotor.getCurrentPosition() <= RSAFETY_POS) && (Position <= RSAFETY_POS)){
-            Rotatemotor.setTargetPosition(Position);
-            Rotatemotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            Rotatemotor.setPower(GetMovePowerLevel(Position)*ROTATE_SPEED);
+                runtime.reset();
+                Rotateservo.setPosition(Position);
+                MoveRotateComplete = true;
 
+
+            }
+            //Insert wait before exiting
         }
 
     }

@@ -9,6 +9,10 @@ public class RobotComp extends BaseHardware{
     public Carousel carousel = new Carousel();
     public Arm_Rotator arm_rotator = new Arm_Rotator();
     public Delivery delivery = new Delivery();
+
+    private static int TrackUpLimit = 400;
+    private static int TrackLowLimit = 400;
+
     @Override
     public void init (){
         // Must set Hardware Map and telemetry before calling init
@@ -55,6 +59,17 @@ public class RobotComp extends BaseHardware{
         carousel.loop();
         arm_rotator.loop();
         delivery.loop();
+
+
+        if (delivery.getTrackMotorPosition() < TrackLowLimit) {
+            arm_rotator.cmdArmRotatePos_CAROUSEL();
+        }
+        else if (delivery.getTrackMotorPosition() > TrackLowLimit){
+            arm_rotator.cmdCarouselRun_INTAKE();
+        }
+
+
+
     }
 
     @Override
