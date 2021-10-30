@@ -63,9 +63,11 @@ public class RobotComp extends BaseHardware{
 
         if (delivery.getTrackMotorPosition() < TrackLowLimit) {
             arm_rotator.cmdArmRotatePos_CAROUSEL();
+            sweeper.cmdSweeperSTOPPED();
         }
         else if (delivery.getTrackMotorPosition() > TrackLowLimit){
             arm_rotator.cmdCarouselRun_INTAKE();
+          //  sweeper.cmdSweeperRun();
         }
 
 

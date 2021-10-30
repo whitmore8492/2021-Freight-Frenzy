@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.RobotLog;
 
 public class Sweeper extends BaseHardware {
@@ -18,12 +19,12 @@ public class Sweeper extends BaseHardware {
 
     public void init(){
         Sweepermotor = hardwareMap.dcMotor.get("IntakeM");
-
+        Sweepermotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         if (Sweepermotor == null) {
             telemetry.log().add("Sweepermotor is null...");
 
-            Sweepermotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+           //Sweepermotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
     }
 
