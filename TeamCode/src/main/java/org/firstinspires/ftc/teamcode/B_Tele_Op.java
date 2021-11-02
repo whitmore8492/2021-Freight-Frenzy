@@ -260,6 +260,9 @@ public class B_Tele_Op extends OpMode {
         if (gamepad2.right_trigger > .8){
             robot.delivery.cmdDeliveryRun_DROP();
         }
+        if ((gamepad2.right_trigger < .79) && (gamepad2.right_trigger > .01)){
+            robot.delivery.cmdDeliveryRun_CLOSE();
+        }
 
         // Update the previous status for gamepad1
         gp1_prev_a = gamepad1.a;

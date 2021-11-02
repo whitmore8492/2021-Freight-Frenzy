@@ -111,7 +111,7 @@ public class A_B_C_Duck extends OpMode {
         }
         if (currentStage == stage._30_Drive_To_Carousel){
             if (robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_SLOW_SPEED, -50, 23);
+                robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_SLOW_SPEED, -50, 20.5);
                 currentStage = stage._40_Caro_Start;
             }
 
@@ -135,15 +135,22 @@ public class A_B_C_Duck extends OpMode {
         }
         if (currentStage == stage._60_Back_Up){
             if (robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 0, -20);
-                currentStage = stage._100_End;
+                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 0, -25);
+                currentStage = stage._70_Turn;
             }
         }
-        if (currentStage == stage._70_Turn){
+        if (currentStage == A_B_C_Duck.stage._70_Turn){
             if (robot.driveTrain.getcmdComplete()) {
+                robot.driveTrain.cmdTurnByGyro(-AUTO_TURN_SPEED, AUTO_TURN_SPEED, -90);
+                currentStage = A_B_C_Duck.stage._80_Drive;
             }
         }
-
+        if (currentStage == A_B_C_Duck.stage._80_Drive){
+            if (robot.driveTrain.getcmdComplete()){
+                robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_SLOW_SPEED, -90, 5);
+                currentStage = A_B_C_Duck.stage._100_End;
+            }
+        }
 
         if (currentStage == stage._100_End){
             if (robot.driveTrain.getcmdComplete()) {
