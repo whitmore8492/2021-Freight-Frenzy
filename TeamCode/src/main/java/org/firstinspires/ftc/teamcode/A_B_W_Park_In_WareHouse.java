@@ -19,7 +19,8 @@ public class A_B_W_Park_In_WareHouse extends OpMode {
     private stage currentStage = stage._unknown;
     // declare auton power variables
     private double AUTO_DRIVE_TURBO_SPEED = DriveTrain.DRIVETRAIN_TURBOSPEED;
-    private double AUTO_DRIVE_SLOW_SPEED = DriveTrain.DRIVETRAIN_NORMALSPEED;
+    private double AUTO_DRIVE_SLOW_SPEED = DriveTrain.DRIVETRAIN_SLOWSPEED;
+    private double AUTO_DRIVE_NORMAl_SPEED = DriveTrain.DRIVETRAIN_NORMALSPEED;
     private double AUTO_TURN_SPEED = DriveTrain.DRIVETRAIN_TURNSPEED;
 
     private String RTAG = "8492-Auton";
@@ -95,7 +96,7 @@ public class A_B_W_Park_In_WareHouse extends OpMode {
         }
 
         if (currentStage == stage._10_Drive_Out) {
-            robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 0, 24);
+            robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 0, -18);
             currentStage = stage._20_Turn;
         }
         RobotLog.aa(RTAG,"stage: " + currentStage);
@@ -108,7 +109,7 @@ public class A_B_W_Park_In_WareHouse extends OpMode {
 
         if (currentStage == stage._30_Drive_To_WareHouse) {
             if ( robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_SLOW_SPEED, 90, 65);
+                robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_NORMAl_SPEED, 90, 67);
                 currentStage = stage._50_Finish;
             }
         }
