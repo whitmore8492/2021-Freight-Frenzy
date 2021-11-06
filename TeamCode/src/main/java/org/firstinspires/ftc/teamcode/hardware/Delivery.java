@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.qualcomm.hardware.rev.RevColorSensorV3;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.common.Settings;
 
 import java.net.PortUnreachableException;
@@ -31,7 +34,7 @@ public static final int TLOAD_POS = 1027;
 public static final int TLOW_POS = -1500;
 public static final int TSPIN_POS = -1630;
 public static final int TMIDDLE_POS = -1830   ;
-public static final int THIGH_POS =-1630  ;
+public static final int THIGH_POS =-2200  ;
 public static final int HARD_STOP = 1200;
 
 public static final int RRECEIVE_POS = 1;
@@ -50,6 +53,9 @@ public static final double ODROP_POS = 0.5;
     private Servo Rotateservo = null;
     private Servo Openservo = null;
 
+    private RevColorSensorV3 BoxSense = null;
+   // private RevColorSensorV3 BoxSense = null;
+
     private ElapsedTime runtime = new ElapsedTime();
     private static final int WaitTime = 1000;
     private boolean MoveRotateComplete = false;
@@ -58,6 +64,8 @@ public static final double ODROP_POS = 0.5;
         Trackmotor = hardwareMap.dcMotor.get("TrackM");
         Rotateservo = hardwareMap.servo.get("RotateS");
         Openservo = hardwareMap.servo.get("OpenS");
+
+        BoxSense = hardwareMap.get(RevColorSensorV3.class, "BoxSense");
 
         Trackmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Trackmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -74,7 +82,8 @@ public static final double ODROP_POS = 0.5;
     }
 
     public void init_loop() {
-
+        telemetry.log().add("BoxSense " + BoxSense.getDistance(DistanceUnit.CM));
+//        telemetry.log().add("BoxSense " + BoxSense.getNormalizedColors());
     }
 
     public void start() {
@@ -82,7 +91,7 @@ public static final double ODROP_POS = 0.5;
     }
 
     public void loop() {
-
+        telemetry.log().add("BoxSense " + BoxSense.getDistance(DistanceUnit.CM));
         // if (Carouselmotor.getCurrentPosition() == Carouselmotor.getTargetPosition()){
 
         if (DELIVERY_mode_Current == Mode.START) {

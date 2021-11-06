@@ -102,7 +102,7 @@ public class A_B_W_Park_In_WareHouse extends OpMode {
         RobotLog.aa(RTAG,"stage: " + currentStage);
         if (currentStage == stage._20_Turn){
           if ( robot.driveTrain.getcmdComplete()) {
-              robot.driveTrain.cmdTurnByGyro(AUTO_TURN_SPEED, -AUTO_TURN_SPEED, 90);
+              robot.driveTrain.cmdTurnByGyro(AUTO_TURN_SPEED, 0, 90);
               currentStage = stage._30_Drive_To_WareHouse;
           }
         }
