@@ -130,14 +130,13 @@ public class B_Tele_Op extends OpMode {
         if ((gamepad1.left_trigger > .8) && (gamepad1.right_trigger < .8)) {
             robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_SLOWSPEED);
             RobotLog.aa(TAGTeleop, "GamepadLB: " + gamepad1.left_bumper);
-            telemetry.addData (TAGTeleop, "GamepadLB: " + gamepad1.left_bumper);
-        } else if((gamepad1.left_trigger < .8) && (gamepad1.right_trigger > .8))
-        {
+            telemetry.addData(TAGTeleop, "GamepadLB: " + gamepad1.left_bumper);
+        } else if ((gamepad1.left_trigger < .8) && (gamepad1.right_trigger > .8)) {
             robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_TURBOSPEED);
-            RobotLog.aa(TAGTeleop,"GamepadRB: " + gamepad1.right_bumper);
-            telemetry.addData (TAGTeleop, "GamepadRB: " + gamepad1.right_bumper);
+            RobotLog.aa(TAGTeleop, "GamepadRB: " + gamepad1.right_bumper);
+            telemetry.addData(TAGTeleop, "GamepadRB: " + gamepad1.right_bumper);
 
-        }else {
+        } else {
             robot.driveTrain.setMaxPower(DriveTrain.DRIVETRAIN_NORMALSPEED);
         }
 
@@ -193,17 +192,14 @@ public class B_Tele_Op extends OpMode {
         }
 
 
-
-
         if (CommonLogic.oneShot(gamepad2.right_bumper, gp2_prev_right_bumper)) {
             //if (robot.subGripper.getIsClosed()) {
             //    robot.subGripper.cmd_open();
             // }
 
-            if (robot.sweeper.cmdCurrentMode() == "STOPPED"){
+            if (robot.sweeper.cmdCurrentMode() == "STOPPED") {
                 robot.sweeper.cmdSweeperRun();
-            }
-            else {
+            } else {
                 robot.sweeper.cmdSweeperSTOPPED();
             }
         }
@@ -214,7 +210,7 @@ public class B_Tele_Op extends OpMode {
 
         if (CommonLogic.oneShot(gamepad2.a, gp2_prev_a)) {
             //robot.subExtender.decPositionIndex();
-           robot.delivery.cmdDeliveryRun_RECEIVE();
+            robot.delivery.cmdDeliveryRun_RECEIVE();
         }
 
         if (CommonLogic.oneShot(gamepad2.b, gp2_prev_b)) {
@@ -257,10 +253,10 @@ public class B_Tele_Op extends OpMode {
             robot.delivery.cmdDeliveryRun_STOP();
         }
 
-        if (gamepad2.right_trigger > .8){
+        if (gamepad2.right_trigger > .8) {
             robot.delivery.cmdDeliveryRun_DROP();
         }
-        if ((gamepad2.right_trigger < .79) && (gamepad2.right_trigger > .01)){
+        if ((gamepad2.right_trigger < .79) && (gamepad2.right_trigger > .01)) {
             robot.delivery.cmdDeliveryRun_CLOSE();
         }
 
@@ -303,7 +299,7 @@ public class B_Tele_Op extends OpMode {
     }
 
     //*********************************************************************************************
-private void  write2Log() {
+    private void write2Log() {
 
 //
 //    RobotLog.aa(TAGTeleop, " gp1_prev_a : " + gp1_prev_a);
@@ -323,14 +319,14 @@ private void  write2Log() {
 //    RobotLog.aa(TAGTeleop, " gp2_prev_y : " + gp2_prev_y);
 //    RobotLog.aa(TAGTeleop, " gp2_prev_right_bumper : " + gp2_prev_right_bumper);
 //    RobotLog.aa(TAGTeleop, " gp2_prev_left_bumper : " + gp2_prev_left_bumper);
-   RobotLog.aa(TAGTeleop, " gp2_prev_dpad_up : " + gp2_prev_dpad_up);
-    RobotLog.aa(TAGTeleop, " gp2_prev_dpad_down : " + gp2_prev_dpad_down);
+        RobotLog.aa(TAGTeleop, " gp2_prev_dpad_up : " + gp2_prev_dpad_up);
+        RobotLog.aa(TAGTeleop, " gp2_prev_dpad_down : " + gp2_prev_dpad_down);
 //    RobotLog.aa(TAGTeleop, " gp2_prev_dpad_left : " + gp2_prev_dpad_left);
 //    RobotLog.aa(TAGTeleop, " gp2_prev_dpad_right : " + gp2_prev_dpad_right);
 //
 //
 
-}
+    }
 
 }
 

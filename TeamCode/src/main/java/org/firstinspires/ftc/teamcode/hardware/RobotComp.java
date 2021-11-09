@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class RobotComp extends BaseHardware{
+public class RobotComp extends BaseHardware {
     public DriveTrain driveTrain = new DriveTrain();
     public Sweeper sweeper = new Sweeper();
     public Carousel carousel = new Carousel();
@@ -17,7 +17,7 @@ public class RobotComp extends BaseHardware{
     private ElapsedTime runtime = new ElapsedTime();
 
     @Override
-    public void init (){
+    public void init() {
         // Must set Hardware Map and telemetry before calling init
         driveTrain.hardwareMap = this.hardwareMap;
         driveTrain.telemetry = this.telemetry;
@@ -39,6 +39,7 @@ public class RobotComp extends BaseHardware{
         delivery.telemetry = this.telemetry;
         delivery.init();
     }
+
     @Override
     public void init_loop() {
         driveTrain.init_loop();
@@ -47,14 +48,16 @@ public class RobotComp extends BaseHardware{
         arm_rotator.init_loop();
         delivery.init_loop();
     }
+
     @Override
-    public void start () {
+    public void start() {
         driveTrain.start();
         sweeper.start();
         carousel.start();
         arm_rotator.start();
         delivery.start();
     }
+
     @Override
     public void loop() {
         driveTrain.loop();
@@ -67,18 +70,18 @@ public class RobotComp extends BaseHardware{
         if (delivery.getTrackMotorPosition() < TrackLowLimit) {
             arm_rotator.cmdArmRotatePos_CAROUSEL();
             sweeper.cmdSweeperSTOPPED();
-        }
-        else if (delivery.getTrackMotorPosition() > TrackLowLimit){
+        } else if (delivery.getTrackMotorPosition() > TrackLowLimit) {
             arm_rotator.cmdCarouselRun_INTAKE();
             //sweeper.cmdSweeperRun();
         }
-
-
+    if ((delivery.cmdCurrentMode() == Delivery.Mode.RECEIVE.toString()) && delivery.cmdIsBoxFull()){
+        sweeper.cmdSweeperSTOPPED();
+    }
 
     }
 
     @Override
-    public void stop () {
+    public void stop() {
         driveTrain.stop();
         sweeper.stop();
         carousel.stop();

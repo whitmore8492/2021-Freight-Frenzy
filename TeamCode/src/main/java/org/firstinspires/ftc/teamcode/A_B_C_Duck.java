@@ -119,7 +119,7 @@ public class A_B_C_Duck extends OpMode {
 
         if (currentStage == stage._40_Caro_Start){
             if (robot.driveTrain.getcmdComplete()) {
-                robot.carousel.cmdCarouselRun_BLUE();
+                robot.carousel.cmdCarouselRun_Auton_BLUE();
                 runtime.reset();
                 currentStage = stage._45_Back_Up;
             }
