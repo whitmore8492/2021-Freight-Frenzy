@@ -230,16 +230,17 @@ public class B_Tele_Op extends OpMode {
 
         if (Math.abs(gamepad2.left_stick_y) > Settings.JOYSTICK_DEADBAND_STICK) {
             //robot.subLifter.stickControl(-gamepad2.left_stick_y);
+            robot.capper.cmdTeleOp(gamepad2.left_stick_y);
         }
 
         if (CommonLogic.oneShot(gamepad2.dpad_up, gp2_prev_dpad_up)) {
             //robot.subLifter.incPositionIndex();
-            robot.arm_rotator.cmdArmRotatePos_CAROUSEL();
+            robot.capper.cmdpark();
         }
 
         if (CommonLogic.oneShot(gamepad2.dpad_down, gp2_prev_dpad_down)) {
             //robot.subLifter.decPositionIndex();
-            robot.arm_rotator.cmdCarouselRun_INTAKE();
+            robot.capper.cmdCollect();
         }
         if (CommonLogic.oneShot(gamepad2.dpad_right, gp2_prev_dpad_right)) {
             //robot.subLifter.decPositionIndex();
@@ -258,6 +259,12 @@ public class B_Tele_Op extends OpMode {
         }
         if ((gamepad2.right_trigger < .79) && (gamepad2.right_trigger > .01)) {
             robot.delivery.cmdDeliveryRun_CLOSE();
+        }
+        if (gamepad2.left_trigger > .8) {
+            robot.capper.cmdPlungerRelease();
+        }
+        if ((gamepad2.left_trigger < .79) && (gamepad2.left_trigger > .01)) {
+            robot.capper.cmdPlungerGrab();
         }
 
         // Update the previous status for gamepad1

@@ -11,6 +11,7 @@ public class RobotComp extends BaseHardware {
     public Carousel carousel = new Carousel();
     public Arm_Rotator arm_rotator = new Arm_Rotator();
     public Delivery delivery = new Delivery();
+    public Capper capper = new Capper();
 
     private static int TrackUpLimit = 400;
     private static int TrackLowLimit = 400;
@@ -38,6 +39,10 @@ public class RobotComp extends BaseHardware {
         delivery.hardwareMap = this.hardwareMap;
         delivery.telemetry = this.telemetry;
         delivery.init();
+
+        capper.hardwareMap = this.hardwareMap;
+        capper.telemetry = this.telemetry;
+        capper.init();
     }
 
     @Override
@@ -47,6 +52,7 @@ public class RobotComp extends BaseHardware {
         carousel.init_loop();
         arm_rotator.init_loop();
         delivery.init_loop();
+        capper.init_loop();
     }
 
     @Override
@@ -56,6 +62,7 @@ public class RobotComp extends BaseHardware {
         carousel.start();
         arm_rotator.start();
         delivery.start();
+        capper.start();
     }
 
     @Override
@@ -65,6 +72,7 @@ public class RobotComp extends BaseHardware {
         carousel.loop();
         arm_rotator.loop();
         delivery.loop();
+        capper.loop();
 
 
         if (delivery.getTrackMotorPosition() < TrackLowLimit) {
@@ -87,5 +95,6 @@ public class RobotComp extends BaseHardware {
         carousel.stop();
         arm_rotator.stop();
         delivery.stop();
+        capper.stop();
     }
 }
