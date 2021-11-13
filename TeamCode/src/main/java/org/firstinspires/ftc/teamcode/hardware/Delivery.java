@@ -57,6 +57,8 @@ public class Delivery extends BaseHardware {
     // private RevColorSensorV3 BoxSense = null;
     private static final double DistanceSenseThresh = 2.1; // Distance measured in cm
     private boolean BoxCapture = false;
+    private int DetectCounter = 0;
+    private static final int DetectThresh = 20;
 
     private ElapsedTime runtime = new ElapsedTime();
     private static final int WaitTime = 1000;
@@ -84,7 +86,7 @@ public class Delivery extends BaseHardware {
     }
 
     public void init_loop() {
-        telemetry.log().add("BoxSense " + BoxSense.getDistance(DistanceUnit.CM));
+       // telemetry.log().add("BoxSense " + BoxSense.getDistance(DistanceUnit.CM));
 //        telemetry.log().add("BoxSense " + BoxSense.getNormalizedColors());
     }
 
@@ -93,14 +95,8 @@ public class Delivery extends BaseHardware {
     }
 
     public void loop() {
-        telemetry.log().add("BoxSense " + BoxSense.getDistance(DistanceUnit.CM));
-       if (BoxSense.getDistance(DistanceUnit.CM) <= DistanceSenseThresh){
-           BoxCapture = true;
+        //telemetry.log().add("BoxSense " + BoxSense.getDistance(DistanceUnit.CM));
 
-       }else {
-           BoxCapture = false;
-
-       }
 
 
         if (DELIVERY_mode_Current == Mode.START) {
@@ -123,10 +119,22 @@ public class Delivery extends BaseHardware {
         }
 
         if (DELIVERY_mode_Current == Mode.RECEIVE) {
+            if (BoxSense.getDistance(DistanceUnit.CM) <= DistanceSenseThresh){
+                DetectCounter++;
+                if (DetectCounter >= DetectThresh) {
+                    BoxCapture = true;
+                }
+
+            }else {
+                DetectCounter = 0;
+                BoxCapture = false;
+
+            }
             if (DELIVERY_mode_Prv != DELIVERY_mode_Current) {
                 if (Rotateservo.getPosition() == RRECEIVE_POS) {
                     MoveTrackMotor(TLOAD_POS);
                 }
+
             }
 
             MoveRotateServo(RRECEIVE_POS);
@@ -134,7 +142,7 @@ public class Delivery extends BaseHardware {
                 MoveTrackMotor(TLOAD_POS);
                 MoveRotateComplete = false;
             }
-            if (Trackmotor.getCurrentPosition() == TLOAD_POS) {
+            if (Trackmotor.getCurrentPosition() >= TLOAD_POS) {
                 Openservo.setPosition(OCATCH_POS);
             }
 
