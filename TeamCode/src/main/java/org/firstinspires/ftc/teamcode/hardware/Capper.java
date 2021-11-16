@@ -17,8 +17,8 @@ public class Capper extends BaseHardware {
 
     private Servo Cap_Plunger_servo = null;
     private DcMotor Cap_Arm_Motor = null;
-    private static final double AutonArmSpeedCap = .65;
-    private static final double ArmSpeedCap = .5;
+    private static final double AutonArmSpeedCap = .4;
+    private static final double ArmSpeedCap = 1.0;
 
 
     public void init(){
@@ -44,7 +44,7 @@ public class Capper extends BaseHardware {
     }
 
     public void init_loop() {
-    //telemetry.log().add("CapperMotorPosition " + Cap_Arm_Motor.getCurrentPosition());
+    telemetry.log().add("CapperMotorPosition " + Cap_Arm_Motor.getCurrentPosition());
     }
 
     public void start() {
@@ -112,12 +112,17 @@ public class Capper extends BaseHardware {
         Cap_Arm_Motor.setTargetPosition(Position);
         Cap_Arm_Motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Cap_Arm_Motor.setPower(AutonArmSpeedCap);
-        if (Cap_Arm_Motor.getCurrentPosition() == Position ){
+        if (Cap_Arm_Motor.getCurrentPosition() >= Position ){
             Cap_Mode_Current = Mode.STOP;
         }
-        if (Cap_Arm_Motor.getCurrentPosition() > (COLLECT_POS * .8) ){
-            Cap_Arm_Motor.setPower(AutonArmSpeedCap * .5);
+        if (Position == COLLECT_POS && Cap_Arm_Motor.getCurrentPosition() > (COLLECT_POS * .8) ){
+            Cap_Arm_Motor.setPower(AutonArmSpeedCap * -0.5);
         }
+/*        if (Position == PARK_POS){
+            Cap_Arm_Motor.setPower();
+        }
+
+ */
     }
 
     public enum Mode {
