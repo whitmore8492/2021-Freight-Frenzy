@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -13,12 +14,12 @@ public class Capper extends BaseHardware {
     private Capper.Mode Cap_Mode_Current = Mode.PARK;
 
     private static final int PARK_POS = 0;
-    private static final int COLLECT_POS = 179;
+    private static final int COLLECT_POS = -500;
 
     private Servo Cap_Plunger_servo = null;
     private DcMotor Cap_Arm_Motor = null;
     private static final double AutonArmSpeedCap = .4;
-    private static final double ArmSpeedCap = 1.0;
+    private static final double ArmSpeedCap = 0.6;
 
 
     public void init(){
@@ -39,6 +40,7 @@ public class Capper extends BaseHardware {
         // setting motor parameters
         Cap_Arm_Motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Cap_Arm_Motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Cap_Arm_Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
     }
@@ -110,7 +112,7 @@ public class Capper extends BaseHardware {
     }
     private void MoveCapMotor(int Position) {
         Cap_Arm_Motor.setTargetPosition(Position);
-        Cap_Arm_Motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Cap_Arm_Motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Cap_Arm_Motor.setPower(AutonArmSpeedCap);
         if (Cap_Arm_Motor.getCurrentPosition() >= Position ){
             Cap_Mode_Current = Mode.STOP;

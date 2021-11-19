@@ -9,10 +9,10 @@ import org.firstinspires.ftc.teamcode.common.Settings;
 import org.firstinspires.ftc.teamcode.hardware.DriveTrain;
 import org.firstinspires.ftc.teamcode.hardware.RobotComp;
 
-@Autonomous(name = "A_B_Hub_Drop_And_Park_In_WareHouse", group = "Auton")
+@Autonomous(name = "A_R_Hub_Drop_And_Park_In_WareHouse", group = "Auton")
 // @Autonomous(...) is the other common choice
 
-public class A_B_Hub_Drop_And_Park_In_WareHouse extends OpMode {
+public class A_R_Hub_Drop_And_Park_In_WareHouse extends OpMode {
 
     //RobotComp robot = new RobotComp();
     RobotComp robot = new RobotComp();
@@ -48,7 +48,7 @@ public class A_B_Hub_Drop_And_Park_In_WareHouse extends OpMode {
         robot.hardwareMap = hardwareMap;
         robot.telemetry = telemetry;
         robot.init();
-        telemetry.addData("A_B_Hub_Drop_And_Park_In_WareHouse", "Initialized");
+        telemetry.addData("A_R_Hub_Drop_And_Park_In_WareHouse", "Initialized");
     }
 
     /*
@@ -132,13 +132,13 @@ public class A_B_Hub_Drop_And_Park_In_WareHouse extends OpMode {
         }
         if (currentStage == stage._40_Turn){
             if (robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdTurnByGyro(AUTO_TURN_SPEED, -AUTO_TURN_SPEED, 90);
+                robot.driveTrain.cmdTurnByGyro(-AUTO_TURN_SPEED, AUTO_TURN_SPEED, -90);
                 currentStage = stage._50_Drive_To_WareHouse;
             }
         }
         if (currentStage == stage._50_Drive_To_WareHouse) {
             if (robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_NORMAL_SPEED, 90, 65);
+                robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_NORMAL_SPEED, -90, 65);
                 currentStage = stage._100_Finish;
             }
         }

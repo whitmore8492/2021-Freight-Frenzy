@@ -8,10 +8,10 @@ import org.firstinspires.ftc.teamcode.common.Settings;
 import org.firstinspires.ftc.teamcode.hardware.DriveTrain;
 import org.firstinspires.ftc.teamcode.hardware.RobotComp;
 
-@Autonomous(name = "A_R_C_2_Duck", group = "Auton")
+@Autonomous(name = "A_B_C_2_Duck", group = "Auton")
 // @Autonomous(...) is the other common choice
 
-public class A_R_C_2_Duck extends OpMode {
+public class A_B_C_2_Duck extends OpMode {
 
     //RobotComp robot = new RobotComp();
     RobotComp robot = new RobotComp();
@@ -51,7 +51,7 @@ public class A_R_C_2_Duck extends OpMode {
         robot.hardwareMap = hardwareMap;
         robot.telemetry = telemetry;
         robot.init();
-        telemetry.addData("A_R_C_2_Duck", "Initialized");
+        telemetry.addData("A_B_C_2_Duck", "Initialized");
     }
 
     /*
@@ -105,13 +105,13 @@ public class A_R_C_2_Duck extends OpMode {
 
         if (currentStage == stage._20_Turn_To_Carousel) {
             if (robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdTurnByGyro(AUTO_TURN_SPEED, -AUTO_TURN_SPEED, 40);
+                robot.driveTrain.cmdTurnByGyro(-AUTO_TURN_SPEED, AUTO_TURN_SPEED, -40);
                 currentStage = stage._30_Drive_To_Carousel;
             }
         }
         if (currentStage == stage._30_Drive_To_Carousel){
             if (robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_SLOW_SPEED, 45, 3.5);
+                robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_SLOW_SPEED, -45, 3.5);
                 currentStage = stage._40_Caro_Start;
             }
 
@@ -119,14 +119,14 @@ public class A_R_C_2_Duck extends OpMode {
 
         if (currentStage == stage._40_Caro_Start){
             if (robot.driveTrain.getcmdComplete()) {
-                robot.carousel.cmdCarouselRun_Auton_RED();
+                robot.carousel.cmdCarouselRun_Auton_BLUE();
                 runtime.reset();
                 currentStage = stage._45_Back_Up;
             }
         }
         if (currentStage == stage._45_Back_Up){
             if (runtime.milliseconds() > 4500) {
-                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 45, -0.5);
+                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, -45, -0.5);
                 currentStage = stage._50_Turn;
             }
 
@@ -134,7 +134,7 @@ public class A_R_C_2_Duck extends OpMode {
         if (currentStage == stage._50_Turn){
             if (robot.driveTrain.getcmdComplete())  {
                 //robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED,0,-40);
-                robot.driveTrain.cmdTurnByGyro(-AUTO_TURN_SPEED, AUTO_TURN_SPEED, 0);
+                robot.driveTrain.cmdTurnByGyro(AUTO_TURN_SPEED, -AUTO_TURN_SPEED, 0);
                 currentStage = stage._60_Back_Up;
             }
 
@@ -149,13 +149,13 @@ public class A_R_C_2_Duck extends OpMode {
         }
         if (currentStage == stage._70_Turn){
             if (robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdTurnByGyro(AUTO_TURN_SPEED, -AUTO_TURN_SPEED, 90);
+                robot.driveTrain.cmdTurnByGyro(-AUTO_TURN_SPEED, AUTO_TURN_SPEED, -90);
                 currentStage = stage._80_Back_Up;
             }
         }
         if (currentStage == stage._80_Back_Up){
             if (robot.driveTrain.getcmdComplete()){
-                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 90, -34);
+                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, -90, -34);
                 currentStage = stage._90_Deliver;
             }
         }
@@ -173,27 +173,27 @@ public class A_R_C_2_Duck extends OpMode {
             }
         }
         if(currentStage == stage._110_Drive_Out){
-            robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_NORMAL_SPEED, 90, 33);
+            robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_NORMAL_SPEED, -90, 33);
             robot.delivery.cmdDeliveryRun_CARRY();
             currentStage = stage._120_Turn;
         }
 
         if (currentStage == stage._120_Turn){
             if (robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdTurnByGyro(AUTO_TURN_SPEED, -AUTO_TURN_SPEED, -150);
+                robot.driveTrain.cmdTurnByGyro(-AUTO_TURN_SPEED, AUTO_TURN_SPEED, 150);
                 currentStage = stage._130_Back_Up;
             }
         }
 
         if(currentStage == stage._130_Back_Up){
             if(robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_NORMAL_SPEED, -165, -21);
+                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_NORMAL_SPEED, 165, -21);
                 currentStage = stage._135_Straighten;
             }
         }
         if (currentStage == stage._135_Straighten){
             if (robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdTurnByGyro(-AUTO_TURN_SPEED, AUTO_TURN_SPEED, -178);
+                robot.driveTrain.cmdTurnByGyro(AUTO_TURN_SPEED, -AUTO_TURN_SPEED, 178);
                 currentStage = stage._140_End;
             }
         }

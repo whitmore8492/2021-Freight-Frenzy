@@ -16,7 +16,7 @@ public class Carousel extends BaseHardware {
     public static final double CAROUSEL_ticsPerInch = CAROUSEL_ticsPerRev / CAROUSEL_wheelDistPerRev / CAROUSEL_gearRatio;
     public static final double CAROUSEL_spin = 5 * 3.14159 * CAROUSEL_ticsPerInch;
     public static final double Carousel_SPEED = .75;
-    public static final double AUTON_CAROUSEL_Speed = .50;
+    public static final double AUTON_CAROUSEL_Speed = .45;
 
     private Carousel.Mode Carousel_mode_Current = Mode.STOPPED;
 
