@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -8,7 +9,7 @@ import org.firstinspires.ftc.teamcode.hardware.DriveTrain;
 import org.firstinspires.ftc.teamcode.hardware.RobotTest;
 import org.firstinspires.ftc.teamcode.hardware.RobotComp;
 import org.firstinspires.ftc.teamcode.common.Settings;
-
+@Disabled
 @Autonomous(name = "Cover_Line", group = "Auton")
 // @Autonomous(...) is the other common choice
 
