@@ -96,7 +96,7 @@ public class A_B_Hub_Drop_And_Park_In_WareHouse extends OpMode {
         }
 
         if (currentStage == stage._10_Drive_Back) {
-            robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 0, -20);
+            robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 0, -20.5);
             robot.delivery.cmdDeliveryRun_HIGH();
             currentStage = stage._20_Drop;
 
@@ -125,7 +125,8 @@ public class A_B_Hub_Drop_And_Park_In_WareHouse extends OpMode {
 
         if (currentStage == stage._30_Drive_Forward) {
             if ( robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_SLOW_SPEED, 0, 8);
+                robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_SLOW_SPEED, 0, 12
+                );
                 robot.delivery.cmdDeliveryRun_CARRY();
                 currentStage = stage._40_Turn;
             }
@@ -138,7 +139,7 @@ public class A_B_Hub_Drop_And_Park_In_WareHouse extends OpMode {
         }
         if (currentStage == stage._50_Drive_To_WareHouse) {
             if (robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_NORMAL_SPEED, 90, 65);
+                robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_NORMAL_SPEED, 90, 70);
                 currentStage = stage._100_Finish;
             }
         }

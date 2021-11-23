@@ -170,6 +170,8 @@ public class B_Tele_Op extends OpMode {
             //if (robot.subGrabbers.getIsDownLeft()) {
             //    robot.subGrabbers.cmdMoveUpLeft();
             //}
+            robot.carousel.cmdCarouselSTOPPED();
+            robot.delivery.cmdDeliveryRun_STOP();
         }
 
         if (CommonLogic.oneShot(gamepad1.dpad_down, gp1_prev_dpad_down)) {
@@ -204,9 +206,6 @@ public class B_Tele_Op extends OpMode {
             }
         }
 
-        if (Math.abs(gamepad2.right_stick_y) > Settings.JOYSTICK_DEADBAND_STICK) {
-            //robot.subExtender.stickControl(-gamepad2.right_stick_y);
-        }
 
         if (CommonLogic.oneShot(gamepad2.a, gp2_prev_a)) {
             //robot.subExtender.decPositionIndex();
@@ -230,8 +229,13 @@ public class B_Tele_Op extends OpMode {
 
         if (Math.abs(gamepad2.left_stick_y) > Settings.JOYSTICK_DEADBAND_STICK) {
             //robot.subLifter.stickControl(-gamepad2.left_stick_y);
-            robot.capper.cmdTeleOp(gamepad2.left_stick_y);
+            robot.capper.cmdTeleOp(gamepad2.left_stick_y * .5);
         }
+        if (Math.abs(gamepad2.right_stick_y) > Settings.JOYSTICK_DEADBAND_STICK) {
+            //robot.subLifter.stickControl(-gamepad2.left_stick_y);
+            robot.capper.cmdTeleOp(gamepad2.right_stick_y * .5);
+        }
+
 
         if (CommonLogic.oneShot(gamepad2.dpad_up, gp2_prev_dpad_up)) {
             //robot.subLifter.incPositionIndex();
@@ -250,8 +254,7 @@ public class B_Tele_Op extends OpMode {
 
         if (CommonLogic.oneShot(gamepad2.dpad_left, gp2_prev_dpad_left)) {
             //robot.subLifter.decPositionIndex();
-            robot.carousel.cmdCarouselSTOPPED();
-            robot.delivery.cmdDeliveryRun_STOP();
+            robot.carousel.cmdCarouselRun_BLUE();
         }
 
         if (gamepad2.right_trigger > .8) {

@@ -82,9 +82,21 @@ public class RobotComp extends BaseHardware {
             arm_rotator.cmdCarouselRun_INTAKE();
             //sweeper.cmdSweeperRun();
         }
-    if ((delivery.cmdCurrentMode() == Delivery.Mode.RECEIVE.toString()) && delivery.cmdIsBoxFull()){
+    /*if ((delivery.cmdCurrentMode() == Delivery.Mode.RECEIVE.toString()) && delivery.cmdIsBoxFull()){
         sweeper.cmdSweeperSTOPPED();
+    }*/
+    if (delivery.cmdCurrentMode() == Delivery.Mode.RECEIVE.toString()){
+        if (delivery.getTrackMotorPosition() >= Delivery.TLOAD_POS){
+            sweeper.cmdSweeperRun();
+
+        }
+        if (delivery.cmdIsBoxFull()){
+            sweeper.cmdSweeperSTOPPED();
+            delivery.cmdDeliveryRun_CARRY();
+        }
     }
+    //if (delivery.cmdCurrentMode() == ); // If we are in a delivery postion, and box is empty, and the box just closed, then return to carry postition.
+
 
     }
 

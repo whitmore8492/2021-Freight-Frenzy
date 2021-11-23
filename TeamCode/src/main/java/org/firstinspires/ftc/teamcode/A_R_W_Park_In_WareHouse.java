@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.RobotLog;
 import org.firstinspires.ftc.teamcode.common.Settings;
 import org.firstinspires.ftc.teamcode.hardware.DriveTrain;
 import org.firstinspires.ftc.teamcode.hardware.RobotTest;
-@Disabled
+//@Disabled
 @Autonomous(name = "A_R_W_Park_In_WareHouse", group = "Auton")
 // @Autonomous(...) is the other common choice
 
@@ -97,7 +97,7 @@ public class A_R_W_Park_In_WareHouse extends OpMode {
         }
 
         if (currentStage == stage._10_Drive_Out) {
-            robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 0, -18);
+            robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 0, -7.5);
             currentStage = stage._20_Turn;
         }
         RobotLog.aa(RTAG,"stage: " + currentStage);
