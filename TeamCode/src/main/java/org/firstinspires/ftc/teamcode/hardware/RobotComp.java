@@ -95,11 +95,18 @@ public class RobotComp extends BaseHardware {
             delivery.cmdDeliveryRun_CARRY();
         }
     }
-    //if (delivery.cmdCurrentMode() == ); // If we are in a delivery postion, and box is empty, and the box just closed, then return to carry postition.
 
 
     }
+    //if (delivery.cmdCurrentMode() == ); // If we are in a delivery postion, and box is empty, and the box just closed, then return to carry postition.
+    public void cmdReturnTo_Carry(){
+    if (delivery.cmdCurrentMode() == Delivery.Mode.HIGH.toString() ||delivery.cmdCurrentMode() == Delivery.Mode.MIDDLE.toString() ||delivery.cmdCurrentMode() == Delivery.Mode.LOWER.toString()  ){
+     delivery.cmdDeliveryRun_CARRY();
+    }
 
+
+
+    }
     @Override
     public void stop() {
         driveTrain.stop();

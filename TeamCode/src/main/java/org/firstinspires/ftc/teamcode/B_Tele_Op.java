@@ -262,6 +262,7 @@ public class B_Tele_Op extends OpMode {
         }
         if ((gamepad2.right_trigger < .79) && (gamepad2.right_trigger > .01)) {
             robot.delivery.cmdDeliveryRun_CLOSE();
+            robot.cmdReturnTo_Carry();
         }
         if (gamepad2.left_trigger > .8) {
             robot.capper.cmdPlungerRelease();

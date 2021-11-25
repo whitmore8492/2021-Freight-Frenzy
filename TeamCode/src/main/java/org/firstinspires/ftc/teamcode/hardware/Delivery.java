@@ -30,19 +30,19 @@ public class Delivery extends BaseHardware {
     public static final double ROTATE_SPEED = .30;
 
     public static final int TCARRY_POS = 0;
-    public static final int TLOAD_POS = 1027;
-    public static final int TLOW_POS = -1500;
-    public static final int TSPIN_POS = -1630;
-    public static final int TMIDDLE_POS = -1830;
-    public static final int THIGH_POS = -2200;
-    public static final int HARD_STOP = 1200;
+    public static final int TLOAD_POS = 1440;
+    public static final int TLOW_POS = 1420;
+    public static final int TSPIN_POS = -1062;
+    public static final int TMIDDLE_POS = 692;
+    public static final int THIGH_POS = -2000;
+    public static final int HARD_STOP = -2100;
 
-    public static final int RRECEIVE_POS = 1;
-    public static final int RCARRY_POS = 1;
-    public static final int RSAFETY_POS = 1;
-    public static final int RDROP_POS = 0;
+    public static final double RRECEIVE_POS = 0;
+    public static final double RCARRY_POS = 0;
+    public static final double RSAFETY_POS = 0;
+    public static final double RDROP_POS = 0.8;
 
-    public static final double OCATCH_POS = 0.5;
+    public static final double OCATCH_POS = 0.4;
     public static final double OCLOSE_POS = 1;
     public static final double ODROP_POS = 0.5;
 
@@ -58,7 +58,7 @@ public class Delivery extends BaseHardware {
     private static final double DistanceSenseThresh = 2.1; // Distance measured in cm
     private boolean BoxCapture = false;
     private int DetectCounter = 0;
-    private static final int DetectThresh = 20;
+    private static final int DetectThresh = 5;
 
     private ElapsedTime runtime = new ElapsedTime();
     private static final int WaitTime = 1000;
@@ -86,7 +86,7 @@ public class Delivery extends BaseHardware {
     }
 
     public void init_loop() {
-       // telemetry.log().add("BoxSense " + BoxSense.getDistance(DistanceUnit.CM));
+        telemetry.log().add("BoxSense " + BoxSense.getDistance(DistanceUnit.CM));
 //        telemetry.log().add("BoxSense " + BoxSense.getNormalizedColors());
     }
 
@@ -95,7 +95,7 @@ public class Delivery extends BaseHardware {
     }
 
     public void loop() {
-        //telemetry.log().add("BoxSense " + BoxSense.getDistance(DistanceUnit.CM));
+        telemetry.log().add("BoxSense " + BoxSense.getDistance(DistanceUnit.CM));
 
 
 
@@ -105,8 +105,8 @@ public class Delivery extends BaseHardware {
             Rotateservo.setPosition(RRECEIVE_POS);
             Openservo.setPosition(OCLOSE_POS);
             RobotLog.aa(TAGDelivery, " Delivery mode " + DELIVERY_mode_Current);
-            telemetry.log().add("Trackmotor tic count " + Trackmotor.getCurrentPosition());
-            telemetry.log().add("Rotateservo tic count " + Rotateservo.getPosition());
+     //       telemetry.log().add("Trackmotor tic count " + Trackmotor.getCurrentPosition());
+     //       telemetry.log().add("Rotateservo tic count " + Rotateservo.getPosition());
         }
 
         if (DELIVERY_mode_Current == Mode.DROP) {
@@ -122,6 +122,7 @@ public class Delivery extends BaseHardware {
             if (BoxSense.getDistance(DistanceUnit.CM) <= DistanceSenseThresh){
                 DetectCounter++;
                 if (DetectCounter >= DetectThresh) {
+                    telemetry.log().add("BoxSense " + DetectCounter);
                     BoxCapture = true;
                 }
 
@@ -204,9 +205,10 @@ public class Delivery extends BaseHardware {
                     MoveTrackMotor(THIGH_POS);
                 }
             }
-
+            telemetry.log().add("Rotateservo tic count " + Rotateservo.getPosition());
             MoveRotateServo(RDROP_POS);
             if (MoveRotateComplete && (runtime.milliseconds() > WaitTime)) {
+
                 MoveTrackMotor(THIGH_POS);
                 MoveRotateComplete = false;
             }
