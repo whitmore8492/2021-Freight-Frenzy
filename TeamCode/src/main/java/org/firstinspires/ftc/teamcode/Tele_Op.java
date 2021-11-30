@@ -220,7 +220,7 @@ public class Tele_Op extends OpMode {
 
         if (CommonLogic.oneShot(gamepad2.b, gp2_prev_b)) {
             //robot.subLeg.pick();
-            robot.delivery.cmdDeliveryRun_LOWER();
+            robot.delivery.cmdDeliveryRun_TSHARED_LOW();
         }
 
         if (CommonLogic.oneShot(gamepad2.y, gp2_prev_y)) {
@@ -230,16 +230,17 @@ public class Tele_Op extends OpMode {
 
         if (CommonLogic.oneShot(gamepad2.x, gp2_prev_x)) {
             //robot.subLeg.place();
-            robot.delivery.cmdDeliveryRun_MIDDLE();
+            robot.delivery.cmdDeliveryRun_TSHARED_HIGH();
         }
 
         if (Math.abs(gamepad2.left_stick_y) > Settings.JOYSTICK_DEADBAND_STICK) {
             //robot.subLifter.stickControl(-gamepad2.left_stick_y);
-            robot.capper.cmdTeleOp(gamepad2.left_stick_y * .5);
+            //robot.capper.cmdTeleOp((gamepad2.left_stick_y * 0.5) + (gamepad2.right_stick_y * 0.5));
+            robot.capper.cmdTeleOp(gamepad2.left_stick_y);
         }
         if (Math.abs(gamepad2.right_stick_y) > Settings.JOYSTICK_DEADBAND_STICK) {
             //robot.subLifter.stickControl(-gamepad2.left_stick_y);
-            robot.capper.cmdTeleOp(gamepad2.right_stick_y * .5);
+            //robot.capper.cmdTeleOp(gamepad2.right_stick_y * .5);
         }
 
         if (CommonLogic.oneShot(gamepad2.dpad_up, gp2_prev_dpad_up)) {
@@ -267,7 +268,7 @@ public class Tele_Op extends OpMode {
         }
         if ((gamepad2.right_trigger < .79) && (gamepad2.right_trigger > .01)){
             robot.delivery.cmdDeliveryRun_CLOSE();
-            robot.cmdReturnTo_Carry();
+           // robot.cmdReturnTo_Carry();
         }
         if (gamepad2.left_trigger > .8) {
             robot.capper.cmdPlungerRelease();

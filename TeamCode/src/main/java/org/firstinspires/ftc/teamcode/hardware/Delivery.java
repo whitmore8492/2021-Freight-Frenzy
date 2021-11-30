@@ -36,13 +36,15 @@ public class Delivery extends BaseHardware {
     public static final int TMIDDLE_POS = 692;
     public static final int THIGH_POS = -2000;
     public static final int HARD_STOP = -2100;
+    public static final int TSHARED_LOW_POS = 1420;
+    public static final int TSHARED_HIGH_POS = 692;
 
     public static final double RRECEIVE_POS = 0;
     public static final double RCARRY_POS = 0;
     public static final double RSAFETY_POS = 0;
     public static final double RDROP_POS = 0.8;
 
-    public static final double OCATCH_POS = 0.4;
+    public static final double OCATCH_POS = 0.65;
     public static final double OCLOSE_POS = 1;
     public static final double ODROP_POS = 0.5;
 
@@ -55,7 +57,7 @@ public class Delivery extends BaseHardware {
 
     private RevColorSensorV3 BoxSense = null;
     // private RevColorSensorV3 BoxSense = null;
-    private static final double DistanceSenseThresh = 2.1; // Distance measured in cm
+    private static final double DistanceSenseThresh = 2.8; // Distance measured in cm
     private boolean BoxCapture = false;
     private int DetectCounter = 0;
     private static final int DetectThresh = 5;
@@ -215,6 +217,38 @@ public class Delivery extends BaseHardware {
             Openservo.setPosition(OCLOSE_POS);
             RobotLog.aa(TAGDelivery, " Delivery mode " + DELIVERY_mode_Current);
         }
+        if (DELIVERY_mode_Current == Mode.SHARED_LOW) {
+            if (DELIVERY_mode_Prv != DELIVERY_mode_Current) {
+                if (Rotateservo.getPosition() == RDROP_POS) {
+                    MoveTrackMotor(TSHARED_LOW_POS);
+                }
+            }
+            telemetry.log().add("Rotateservo tic count " + Rotateservo.getPosition());
+            MoveRotateServo(RDROP_POS);
+            if (MoveRotateComplete && (runtime.milliseconds() > WaitTime)) {
+
+                MoveTrackMotor(TSHARED_LOW_POS);
+                MoveRotateComplete = false;
+            }
+            Openservo.setPosition(OCLOSE_POS);
+            RobotLog.aa(TAGDelivery, " Delivery mode " + DELIVERY_mode_Current);
+        }
+        if (DELIVERY_mode_Current == Mode.SHARED_HIGH) {
+            if (DELIVERY_mode_Prv != DELIVERY_mode_Current) {
+                if (Rotateservo.getPosition() == RDROP_POS) {
+                    MoveTrackMotor(TSHARED_HIGH_POS);
+                }
+            }
+            telemetry.log().add("Rotateservo tic count " + Rotateservo.getPosition());
+            MoveRotateServo(RDROP_POS);
+            if (MoveRotateComplete && (runtime.milliseconds() > WaitTime)) {
+
+                MoveTrackMotor(TSHARED_HIGH_POS);
+                MoveRotateComplete = false;
+            }
+            Openservo.setPosition(OCLOSE_POS);
+            RobotLog.aa(TAGDelivery, " Delivery mode " + DELIVERY_mode_Current);
+        }
 
         if (Trackmotor.getCurrentPosition() == Trackmotor.getTargetPosition()) {
             Trackmotor.setPower(0);
@@ -265,6 +299,15 @@ public class Delivery extends BaseHardware {
         DELIVERY_mode_Current = Mode.CLOSE;
     }
 
+    public void cmdDeliveryRun_TSHARED_LOW() {
+        DELIVERY_mode_Current = Mode.SHARED_LOW;
+
+    }
+
+    public void cmdDeliveryRun_TSHARED_HIGH() {
+        DELIVERY_mode_Current = Mode.SHARED_HIGH;
+    }
+
     public String cmdCurrentMode() {
         return DELIVERY_mode_Current.name();
     }
@@ -281,7 +324,9 @@ public class Delivery extends BaseHardware {
         START,
         DROP,
         CLOSE,
-        STOPPED
+        STOPPED,
+        SHARED_LOW,
+        SHARED_HIGH
     }
 
     public double GetMovePowerLevel(int TargetPos) {

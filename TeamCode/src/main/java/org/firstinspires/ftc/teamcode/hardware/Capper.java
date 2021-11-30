@@ -19,7 +19,7 @@ public class Capper extends BaseHardware {
     private Servo Cap_Plunger_servo = null;
     private DcMotor Cap_Arm_Motor = null;
     private static final double AutonArmSpeedCap = .4;
-    private static final double ArmSpeedCap = 0.6;
+    private static final double ArmSpeedCap = 0.8;
 private static final int CAPARMTICTOL = 10;
 
     public void init(){

@@ -78,10 +78,11 @@ public class RobotComp extends BaseHardware {
         if (delivery.getTrackMotorPosition() < TrackLowLimit) {
             arm_rotator.cmdArmRotatePos_CAROUSEL();
             sweeper.cmdSweeperSTOPPED();
-        } else if (delivery.getTrackMotorPosition() > TrackLowLimit) {
+        }
+        /*else if (delivery.getTrackMotorPosition() > TrackLowLimit) {
             arm_rotator.cmdCarouselRun_INTAKE();
             //sweeper.cmdSweeperRun();
-        }
+        }*/
     /*if ((delivery.cmdCurrentMode() == Delivery.Mode.RECEIVE.toString()) && delivery.cmdIsBoxFull()){
         sweeper.cmdSweeperSTOPPED();
     }*/
@@ -94,15 +95,19 @@ public class RobotComp extends BaseHardware {
             sweeper.cmdSweeperSTOPPED();
             delivery.cmdDeliveryRun_CARRY();
         }
+        if (delivery.getTrackMotorPosition() > TrackLowLimit) {
+            arm_rotator.cmdCarouselRun_INTAKE();
+            //sweeper.cmdSweeperRun();
+        }
     }
 
 
     }
     //if (delivery.cmdCurrentMode() == ); // If we are in a delivery postion, and box is empty, and the box just closed, then return to carry postition.
     public void cmdReturnTo_Carry(){
-    if (delivery.cmdCurrentMode() == Delivery.Mode.HIGH.toString() ||delivery.cmdCurrentMode() == Delivery.Mode.MIDDLE.toString() ||delivery.cmdCurrentMode() == Delivery.Mode.LOWER.toString()  ){
+   // if (delivery.cmdCurrentMode() == Delivery.Mode.HIGH.toString() ||delivery.cmdCurrentMode() == Delivery.Mode.MIDDLE.toString() ||delivery.cmdCurrentMode() == Delivery.Mode.LOWER.toString()  ){
      delivery.cmdDeliveryRun_CARRY();
-    }
+    //}
 
 
 
