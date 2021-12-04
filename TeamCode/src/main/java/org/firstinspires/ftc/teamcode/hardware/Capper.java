@@ -11,7 +11,7 @@ public class Capper extends BaseHardware {
 
     private static final double OUT_POS = 1;
     private static final double IN_POS = 0;
-    private Capper.Mode Cap_Mode_Current = Mode.PARK;
+    private Capper.Mode Cap_Mode_Current = Mode.STOP;
 
     private static final int PARK_POS = 0;
     private static final int COLLECT_POS = -500;
@@ -68,6 +68,11 @@ private static final int CAPARMTICTOL = 10;
                MoveCapMotor(COLLECT_POS);
                break;
 
+           case TELEOP:
+               // doTeleop was put directly into cmdTeleop
+               //doTeleop();
+               break;
+
            case STOP:
                Cap_Arm_Motor.setPower(0);
                break;
@@ -85,6 +90,7 @@ private static final int CAPARMTICTOL = 10;
 
     public void cmdTeleOp(double ArmSpeed){
 
+        Cap_Mode_Current = Mode.TELEOP;
         Cap_Arm_Motor.setPower(ArmSpeed * ArmSpeedCap);
 
     }
@@ -120,7 +126,7 @@ private static final int CAPARMTICTOL = 10;
           Cap_Arm_Motor.setPower(-AutonArmSpeedCap);
       }
 
-               if (Cap_Arm_Motor.getCurrentPosition() >= (Position - CAPARMTICTOL) || Cap_Arm_Motor.getCurrentPosition() <= (Position + CAPARMTICTOL) ){
+               if (Cap_Arm_Motor.getCurrentPosition() >= (Position - CAPARMTICTOL) && Cap_Arm_Motor.getCurrentPosition() <= (Position + CAPARMTICTOL) ){
             Cap_Mode_Current = Mode.STOP;
         }
 
@@ -134,6 +140,7 @@ private static final int CAPARMTICTOL = 10;
     public enum Mode {
         PARK,
         CAPPING,
+        TELEOP,
         STOP
 
     }

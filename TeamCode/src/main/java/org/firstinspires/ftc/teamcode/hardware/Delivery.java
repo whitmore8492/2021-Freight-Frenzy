@@ -42,7 +42,7 @@ public class Delivery extends BaseHardware {
     public static final double RRECEIVE_POS = 0;
     public static final double RCARRY_POS = 0;
     public static final double RSAFETY_POS = 0;
-    public static final double RDROP_POS = 0.8;
+    public static final double RDROP_POS = 1.0;
 
     public static final double OCATCH_POS = 0.65;
     public static final double OCLOSE_POS = 1;
@@ -88,7 +88,7 @@ public class Delivery extends BaseHardware {
     }
 
     public void init_loop() {
-        telemetry.log().add("BoxSense " + BoxSense.getDistance(DistanceUnit.CM));
+        //telemetry.log().add("BoxSense " + BoxSense.getDistance(DistanceUnit.CM));
 //        telemetry.log().add("BoxSense " + BoxSense.getNormalizedColors());
     }
 
@@ -97,7 +97,7 @@ public class Delivery extends BaseHardware {
     }
 
     public void loop() {
-        telemetry.log().add("BoxSense " + BoxSense.getDistance(DistanceUnit.CM));
+        //telemetry.log().add("BoxSense " + BoxSense.getDistance(DistanceUnit.CM));
 
 
 

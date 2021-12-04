@@ -236,8 +236,9 @@ public class Tele_Op extends OpMode {
         if (Math.abs(gamepad2.left_stick_y) > Settings.JOYSTICK_DEADBAND_STICK) {
             //robot.subLifter.stickControl(-gamepad2.left_stick_y);
             //robot.capper.cmdTeleOp((gamepad2.left_stick_y * 0.5) + (gamepad2.right_stick_y * 0.5));
-            robot.capper.cmdTeleOp(gamepad2.left_stick_y);
+
         }
+        robot.capper.cmdTeleOp(gamepad2.left_stick_y);
         if (Math.abs(gamepad2.right_stick_y) > Settings.JOYSTICK_DEADBAND_STICK) {
             //robot.subLifter.stickControl(-gamepad2.left_stick_y);
             //robot.capper.cmdTeleOp(gamepad2.right_stick_y * .5);
