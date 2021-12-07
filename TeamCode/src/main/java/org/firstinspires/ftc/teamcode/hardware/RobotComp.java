@@ -18,6 +18,8 @@ public class RobotComp extends BaseHardware {
     private static int TrackLowLimit = 400;
     private ElapsedTime runtime = new ElapsedTime();
 
+    private int Detection_Count = 0;
+
     @Override
     public void init() {
         // Must set Hardware Map and telemetry before calling init
@@ -146,6 +148,19 @@ public class RobotComp extends BaseHardware {
                 delivery.cmdDeliveryRun_HIGH();
                 break;
         }
+
+
+    }
+
+    public boolean cmd_Set_Delivery_By_Sensor_Short (Sensor_Arm.Side CUR, Delivery.Mode Pos){
+        if(sensor_arm.cmd_Read_Position_Short(CUR)){
+            delivery.cmdDeliveryRun(Pos);
+            return true;
+        }
+            else{
+                return false;
+        }
+
 
 
     }

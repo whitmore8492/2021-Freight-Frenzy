@@ -20,7 +20,7 @@ public class Delivery extends BaseHardware {
     public static final double TRACK_gearRatio = 40.0 / 40.0;
     public static final double TRACK_ticsPerInch = TRACK_ticsPerRev / TRACK_wheelDistPerRev / TRACK_gearRatio;
     public static final double TRACK_spin = 1.25 * 15 * 3.14159 * TRACK_ticsPerInch;
-    public static final double TRACK_SPEED = .85;
+    public static final double TRACK_SPEED = 1.0;
 
     public static final int ROTATE_ticsPerRev = Settings.REV_HD_40_MOTOR_TICKS_PER_REV;
     public static final double ROTATE_wheelDistPerRev = 2 * 3.14159;
@@ -298,6 +298,8 @@ public class Delivery extends BaseHardware {
     public void cmdDeliveryRun_CLOSE() {
         DELIVERY_mode_Current = Mode.CLOSE;
     }
+
+    public void cmdDeliveryRun(Mode CUR){DELIVERY_mode_Current = CUR; }
 
     public void cmdDeliveryRun_TSHARED_LOW() {
         DELIVERY_mode_Current = Mode.SHARED_LOW;

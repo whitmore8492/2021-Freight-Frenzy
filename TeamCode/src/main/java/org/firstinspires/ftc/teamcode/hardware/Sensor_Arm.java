@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.MagneticFlux;
 
 public class Sensor_Arm extends BaseHardware {
 
@@ -43,6 +44,7 @@ public class Sensor_Arm extends BaseHardware {
     public static final double B2F_Lower = 5;
     public static final double B2F_Upper = 5;
 
+    private static final double MaxDetectRange = 10; // in inches
 
     private Servo Sensor_Arm_servo = null;
 
@@ -188,6 +190,38 @@ private Rev2mDistanceSensor RRightDS = null;
         }
         return Position.UNKNOWN;
     }
+    public Boolean cmd_Read_Position_Short(Side CUR){
+        double SDistance = 0;
+        switch (CUR){
+            case LEFT:
+                SDistance = RLeftDS.getDistance(DistanceUnit.INCH);
+                if (SDistance <= MaxDetectRange){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+
+            case RIGHT:
+                SDistance = RRightDS.getDistance(DistanceUnit.INCH);
+                if (SDistance <= MaxDetectRange){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+
+            default:
+                return false;
+        }
+
+    }
+
+    public enum Side{
+        LEFT,
+        RIGHT
+    }
+
     public enum Alliance{
         RED,
         BLUE

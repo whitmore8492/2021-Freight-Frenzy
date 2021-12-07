@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.hardware.DriveTrain;
 import org.firstinspires.ftc.teamcode.hardware.RobotComp;
 import org.firstinspires.ftc.teamcode.hardware.Sensor_Arm;
 
-@Disabled
+//@Disabled
 
 @Autonomous(name = "A_R_C_3_Duck", group = "Auton")
 // @Autonomous(...) is the other common choice
@@ -147,29 +147,16 @@ public class A_R_C_3_Duck extends OpMode {
         }
         if (currentStage == stage._60_Back_Up){
             if (robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 0, -10.3); //Of 30
-                robot.delivery.cmdDeliveryRun_HIGH();
-                currentStage = stage._63_Confirm_Position;
+                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 0, -15); //Of 30
+               // robot.delivery.cmdDeliveryRun_HIGH();
+                currentStage = stage._67_Finish_Drive;
             }
         }
-        if (currentStage == stage._63_Confirm_Position) {
-            if (robot.driveTrain.getcmdComplete()) {
-                //Update loop count add one
-                //If loop count greater than 3 set delivery position high and go to step 67
-                //Check to confirm distance from wall
-                //If distance not correct move to position
-                //If distance is correct move on
-                currentStage = stage._65_Scan_Element;
-            }
-        }
-        if (currentStage == stage._65_Scan_Element){
-            robot.cmd_Set_Delivery_By_Sensor(2, Sensor_Arm.Alliance.RED);
-            currentStage = stage._67_Finish_Drive;
-        }
+
 
         if (currentStage == stage._67_Finish_Drive){
             if (robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 0, -19.7); //Of 30
+                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 0, -15); //Of 30
                 robot.delivery.cmdDeliveryRun_HIGH();
                 currentStage = stage._70_Turn;
             }
@@ -178,12 +165,14 @@ public class A_R_C_3_Duck extends OpMode {
         if (currentStage == stage._70_Turn){
             if (robot.driveTrain.getcmdComplete()) {
                 robot.driveTrain.cmdTurnByGyro(AUTO_TURN_SPEED, -AUTO_TURN_SPEED, 90);
-                currentStage = stage._80_Back_Up;
+                robot.sensor_arm.cmd_Sensor_Arm_Servo_Read();
+                currentStage = stage._140_End;
             }
         }
         if (currentStage == stage._80_Back_Up){
             if (robot.driveTrain.getcmdComplete()){
                 robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 90, -32.5);
+                robot.sensor_arm.cmd_Sensor_Arm_Servo_Up();
                 currentStage = stage._90_Deliver;
             }
         }
@@ -256,11 +245,11 @@ public class A_R_C_3_Duck extends OpMode {
         _45_Back_Up,
         _50_Turn,
         _60_Back_Up,
-        _63_Confirm_Position,
-        _65_Scan_Element,
+
         _67_Finish_Drive,
         _70_Turn,
         _80_Back_Up,
+        _83_,
         _90_Deliver,
         _100_Close,
         _110_Drive_Out,
