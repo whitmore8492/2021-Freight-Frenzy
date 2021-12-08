@@ -36,7 +36,7 @@ private static final int CAPARMTICTOL = 10;
             telemetry.log().add(("Cap_Arm_Motor is null..."));
         }
         // setting servo parameters
-        Cap_Plunger_servo.setPosition(OUT_POS);
+        Cap_Plunger_servo.setPosition(IN_POS);
         // setting motor parameters
         Cap_Arm_Motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Cap_Arm_Motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

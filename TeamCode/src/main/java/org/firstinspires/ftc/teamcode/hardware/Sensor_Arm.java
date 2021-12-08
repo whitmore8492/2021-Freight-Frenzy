@@ -44,7 +44,7 @@ public class Sensor_Arm extends BaseHardware {
     public static final double B2F_Lower = 5;
     public static final double B2F_Upper = 5;
 
-    private static final double MaxDetectRange = 10; // in inches
+    private static final double MaxDetectRange = 25; // in inches
 
     private Servo Sensor_Arm_servo = null;
 
@@ -67,8 +67,8 @@ private Rev2mDistanceSensor RRightDS = null;
 
     public void init_loop() {
         //cmd_Sensor_Arm_Servo_Read();
-        telemetry.log().add("FrontDS " + FrontDS.getDistance(DistanceUnit.CM));
-        //telemetry.log().add("RLeftDS " + RLeftDS.getDistance(DistanceUnit.CM));
+        //telemetry.log().add("FrontDS " + FrontDS.getDistance(DistanceUnit.CM));
+        telemetry.log().add("RLeftDS " + RLeftDS.getDistance(DistanceUnit.CM));
        //telemetry.log().add("RRightDS " + RRightDS.getDistance(DistanceUnit.CM));
     }
 
@@ -191,6 +191,7 @@ private Rev2mDistanceSensor RRightDS = null;
         return Position.UNKNOWN;
     }
     public Boolean cmd_Read_Position_Short(Side CUR){
+        telemetry.log().add("**SDistance " + RLeftDS.getDistance(DistanceUnit.INCH));
         double SDistance = 0;
         switch (CUR){
             case LEFT:

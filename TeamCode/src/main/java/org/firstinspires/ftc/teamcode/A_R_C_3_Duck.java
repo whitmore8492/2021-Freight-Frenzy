@@ -5,7 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.common.Settings;
+import org.firstinspires.ftc.teamcode.hardware.Delivery;
 import org.firstinspires.ftc.teamcode.hardware.DriveTrain;
 import org.firstinspires.ftc.teamcode.hardware.RobotComp;
 import org.firstinspires.ftc.teamcode.hardware.Sensor_Arm;
@@ -157,7 +159,7 @@ public class A_R_C_3_Duck extends OpMode {
         if (currentStage == stage._67_Finish_Drive){
             if (robot.driveTrain.getcmdComplete()) {
                 robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 0, -15); //Of 30
-                robot.delivery.cmdDeliveryRun_HIGH();
+                //robot.delivery.cmdDeliveryRun_HIGH();
                 currentStage = stage._70_Turn;
             }
         }
@@ -166,14 +168,80 @@ public class A_R_C_3_Duck extends OpMode {
             if (robot.driveTrain.getcmdComplete()) {
                 robot.driveTrain.cmdTurnByGyro(AUTO_TURN_SPEED, -AUTO_TURN_SPEED, 90);
                 robot.sensor_arm.cmd_Sensor_Arm_Servo_Read();
-                currentStage = stage._140_End;
+                currentStage = stage._78_BACK_UP;
             }
         }
-        if (currentStage == stage._80_Back_Up){
+        if (currentStage == stage._78_BACK_UP) {
+            if (robot.driveTrain.getcmdComplete()) {
+                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 90, -4); // Of 32.25
+                currentStage = stage._80_Back_Up_READ;
+            }
+        }
+        if (currentStage == stage._80_Back_Up_READ){
+            robot.cmd_Set_Delivery_By_Sensor_Short(Sensor_Arm.Side.LEFT, Delivery.Mode.LOWER);
             if (robot.driveTrain.getcmdComplete()){
-                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 90, -32.5);
+               // robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 90, -32.5);
+                //robot.cmd_Set_Delivery_By_Sensor_Short(Sensor_Arm.Side.LEFT, Delivery.Mode.LOWER);
+               // robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 90, -20);
+                //robot.sensor_arm.cmd_Sensor_Arm_Servo_Up();
+                currentStage = stage._82_BACK_UP;
+            }
+        }
+        if (currentStage == stage._82_BACK_UP) {
+            if (robot.driveTrain.getcmdComplete()) {
+                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 90, -4); // 9 Of 32.25
+                currentStage = stage._83_BACK_UP;
+            }
+        }
+        if (currentStage == stage._83_BACK_UP) {
+            if (robot.driveTrain.getcmdComplete()) {
+                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 90, -5); // 13 Of 32.25
+                currentStage = stage._84_Back_Up_READ;
+            }
+        }
+        if (currentStage == stage._84_Back_Up_READ){
+            robot.cmd_Set_Delivery_By_Sensor_Short(Sensor_Arm.Side.LEFT, Delivery.Mode.MIDDLE);
+            if (robot.driveTrain.getcmdComplete()){
+                // robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 90, -32.5);
+                //robot.cmd_Set_Delivery_By_Sensor_Short(Sensor_Arm.Side.LEFT, Delivery.Mode.LOWER);
+                // robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 90, -20);
+                //robot.sensor_arm.cmd_Sensor_Arm_Servo_Up();
+                currentStage = stage._89_BACK_UP;
+            }
+        }
+        /*if (currentStage == stage._86_BACK_UP) {
+            if (robot.driveTrain.getcmdComplete()) {
+                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 90, -5); // 18 Of 32.25
+                currentStage = stage._87_BACK_UP;
+            }
+        }
+        if (currentStage == stage._87_BACK_UP) {
+            if (robot.driveTrain.getcmdComplete()) {
+                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 90, -4); // 20 Of 32.25
+                currentStage = stage._88_Back_Up_READ;
+            }
+        }
+        if (currentStage == stage._88_Back_Up_READ){
+            robot.cmd_Set_Delivery_By_Sensor_Short(Sensor_Arm.Side.LEFT, Delivery.Mode.HIGH);
+            if (robot.driveTrain.getcmdComplete()){
+                // robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 90, -32.5);
+                //robot.cmd_Set_Delivery_By_Sensor_Short(Sensor_Arm.Side.LEFT, Delivery.Mode.LOWER);
+                // robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 90, -20);
+                //robot.sensor_arm.cmd_Sensor_Arm_Servo_Up();
+                runtime.reset();
+                currentStage = stage._89_BACK_UP;
+            }
+        }*/
+        if (currentStage == stage._89_BACK_UP) {
+            if (robot.driveTrain.getcmdComplete()) {
                 robot.sensor_arm.cmd_Sensor_Arm_Servo_Up();
-                currentStage = stage._90_Deliver;
+                if (runtime.milliseconds() > 1000){
+                if (robot.delivery.cmdCurrentMode() != Delivery.Mode.CARRY.toString()){
+                    robot.delivery.cmdDeliveryRun_HIGH();
+                }
+                    robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, 90, -16); // 32.25 Of 32.25
+                    currentStage = stage._90_Deliver;
+                }
             }
         }
         if(currentStage == stage._90_Deliver){
@@ -190,7 +258,7 @@ public class A_R_C_3_Duck extends OpMode {
             }
         }
         if(currentStage == stage._110_Drive_Out){
-            robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_NORMAL_SPEED, 90, 32.5);
+            robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_NORMAL_SPEED, 90, 31);
             robot.delivery.cmdDeliveryRun_CARRY();
             currentStage = stage._120_Turn;
         }
@@ -245,11 +313,17 @@ public class A_R_C_3_Duck extends OpMode {
         _45_Back_Up,
         _50_Turn,
         _60_Back_Up,
-
         _67_Finish_Drive,
         _70_Turn,
-        _80_Back_Up,
-        _83_,
+        _78_BACK_UP,
+        _80_Back_Up_READ,
+        _82_BACK_UP,
+        _83_BACK_UP,
+        _84_Back_Up_READ,
+        _86_BACK_UP,
+        _87_BACK_UP,
+        _88_Back_Up_READ,
+        _89_BACK_UP,
         _90_Deliver,
         _100_Close,
         _110_Drive_Out,
