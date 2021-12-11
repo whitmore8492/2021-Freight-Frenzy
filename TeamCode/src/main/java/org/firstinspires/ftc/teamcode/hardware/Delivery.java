@@ -31,7 +31,7 @@ public class Delivery extends BaseHardware {
 
     public static final int TCARRY_POS = 0;
     public static final int TLOAD_POS = 1440;
-    public static final int TLOW_POS = 1420;
+    public static final int TLOW_POS = 1440;
     public static final int TSPIN_POS = -1062;
     public static final int TMIDDLE_POS = 692;
     public static final int THIGH_POS = -2000;
@@ -207,7 +207,7 @@ public class Delivery extends BaseHardware {
                     MoveTrackMotor(THIGH_POS);
                 }
             }
-            telemetry.log().add("Rotateservo tic count " + Rotateservo.getPosition());
+            //telemetry.log().add("Rotateservo tic count " + Rotateservo.getPosition());
             MoveRotateServo(RDROP_POS);
             if (MoveRotateComplete && (runtime.milliseconds() > WaitTime)) {
 
@@ -223,7 +223,7 @@ public class Delivery extends BaseHardware {
                     MoveTrackMotor(TSHARED_LOW_POS);
                 }
             }
-            telemetry.log().add("Rotateservo tic count " + Rotateservo.getPosition());
+           // telemetry.log().add("Rotateservo tic count " + Rotateservo.getPosition());
             MoveRotateServo(RDROP_POS);
             if (MoveRotateComplete && (runtime.milliseconds() > WaitTime)) {
 
@@ -239,7 +239,7 @@ public class Delivery extends BaseHardware {
                     MoveTrackMotor(TSHARED_HIGH_POS);
                 }
             }
-            telemetry.log().add("Rotateservo tic count " + Rotateservo.getPosition());
+            //telemetry.log().add("Rotateservo tic count " + Rotateservo.getPosition());
             MoveRotateServo(RDROP_POS);
             if (MoveRotateComplete && (runtime.milliseconds() > WaitTime)) {
 

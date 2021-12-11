@@ -68,7 +68,7 @@ private Rev2mDistanceSensor RRightDS = null;
     public void init_loop() {
         //cmd_Sensor_Arm_Servo_Read();
         //telemetry.log().add("FrontDS " + FrontDS.getDistance(DistanceUnit.CM));
-        telemetry.log().add("RLeftDS " + RLeftDS.getDistance(DistanceUnit.CM));
+        //telemetry.log().add("RLeftDS " + RLeftDS.getDistance(DistanceUnit.INCH));
        //telemetry.log().add("RRightDS " + RRightDS.getDistance(DistanceUnit.CM));
     }
 
@@ -119,6 +119,8 @@ private Rev2mDistanceSensor RRightDS = null;
                 switch (seat){
                     case 1:
                         SDistance = RLeftDS.getDistance(DistanceUnit.CM);
+                        RobotLog.aa(TAG, "++++SDistance: " + SDistance + "Seat: " + seat + "Cur" );
+
                         if (SDistance >= R1N_Lower && SDistance <= R1N_Upper){
                             return Position.NEAR;
                         }
@@ -134,6 +136,8 @@ private Rev2mDistanceSensor RRightDS = null;
 
                     case 2:
                         SDistance = RLeftDS.getDistance(DistanceUnit.CM);
+                        RobotLog.aa(TAG, "++++SDistance: " + SDistance + "Seat: " + seat + "Cur" );
+
                         if (SDistance >= R2N_Lower && SDistance <= R2N_Upper){
                             return Position.NEAR;
                         }
@@ -153,6 +157,8 @@ private Rev2mDistanceSensor RRightDS = null;
                 switch (seat){
                     case 1:
                         SDistance = RLeftDS.getDistance(DistanceUnit.CM);
+                        RobotLog.aa(TAG, "++++SDistance: " + SDistance + "Seat: " + seat + "Cur" );
+
                         if (SDistance >= B1N_Lower && SDistance <= B1N_Upper){
                             return Position.NEAR;
                         }
@@ -168,6 +174,8 @@ private Rev2mDistanceSensor RRightDS = null;
 
                     case 2:
                         SDistance = RLeftDS.getDistance(DistanceUnit.CM);
+                        RobotLog.aa(TAG, "++++SDistance: " + SDistance + "Seat: " + seat + "Cur" );
+
                         if (SDistance >= B2N_Lower && SDistance <= B2N_Upper){
                             return Position.NEAR;
                         }
@@ -188,15 +196,25 @@ private Rev2mDistanceSensor RRightDS = null;
             default:
                 return Position.UNKNOWN;
         }
+
         return Position.UNKNOWN;
+
     }
     public Boolean cmd_Read_Position_Short(Side CUR){
-        telemetry.log().add("**SDistance " + RLeftDS.getDistance(DistanceUnit.INCH));
-        double SDistance = 0;
+        Double LeftSDistance = RLeftDS.getDistance(DistanceUnit.INCH);
+        Double RightSDistance = RRightDS.getDistance(DistanceUnit.INCH);
+        Double FrontSDistance = FrontDS.getDistance(DistanceUnit.INCH);
+        //telemetry.log().add("**LeftSDistance " + LeftSDistance);
+        telemetry.log().add("**FrontSDistance " + FrontSDistance);
+        telemetry.log().add("**RightSDistance " + RightSDistance);
+        RobotLog.aa(TAG, "+++ In cmd_Read_Position_Short: Cur: " + CUR );
+
         switch (CUR){
             case LEFT:
-                SDistance = RLeftDS.getDistance(DistanceUnit.INCH);
-                if (SDistance <= MaxDetectRange){
+                LeftSDistance = RLeftDS.getDistance(DistanceUnit.INCH);
+                RobotLog.aa(TAG, "++++LeftSDistance: " + LeftSDistance  + "Cur: " + CUR );
+
+                if (LeftSDistance <= MaxDetectRange){
                     return true;
                 }
                 else {
@@ -204,8 +222,10 @@ private Rev2mDistanceSensor RRightDS = null;
                 }
 
             case RIGHT:
-                SDistance = RRightDS.getDistance(DistanceUnit.INCH);
-                if (SDistance <= MaxDetectRange){
+                RightSDistance = RRightDS.getDistance(DistanceUnit.INCH);
+                RobotLog.aa(TAG, "++++RightSDistance: " + RightSDistance  + "Cur: " + CUR );
+
+                if (RightSDistance <= MaxDetectRange - 10){
                     return true;
                 }
                 else {

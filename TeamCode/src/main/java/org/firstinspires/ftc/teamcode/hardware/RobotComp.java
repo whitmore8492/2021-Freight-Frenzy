@@ -153,8 +153,11 @@ public class RobotComp extends BaseHardware {
     }
 
     public boolean cmd_Set_Delivery_By_Sensor_Short (Sensor_Arm.Side CUR, Delivery.Mode Pos){
+        telemetry.log().add("**ReadPos " + Pos.toString());
         if(sensor_arm.cmd_Read_Position_Short(CUR)){
+            telemetry.log().add("**SettingPos " + Pos.toString());
             delivery.cmdDeliveryRun(Pos);
+
             return true;
         }
             else{
