@@ -197,7 +197,7 @@ public class A_B_C_3_Duck extends OpMode {
         }
         if (currentStage == stage._86_BACK_UP) {
             if (robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, -90, -5); // 18 Of 32.25
+                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, -90, -4); // 18 Of 32.25
                 currentStage = stage._87_BACK_UP;
             }
         }
@@ -207,16 +207,11 @@ public class A_B_C_3_Duck extends OpMode {
 
             }
             if (robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, -90, -4); // 20 Of 32.25
-                currentStage = stage._88_Back_Up_READ;
-            }
-        }
-        if (currentStage == stage._87_5_BACK_UP_READ){
-            if (robot.driveTrain.getcmdComplete()) {
                 robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, -90, -5); // 20 Of 32.25
                 currentStage = stage._88_Back_Up_READ;
             }
         }
+
         if (currentStage == stage._88_Back_Up_READ){
             //if (FOUNDTE == false) {
             //    robot.cmd_Set_Delivery_By_Sensor_Short(Sensor_Arm.Side.RIGHT, Delivery.Mode.LOWER);
