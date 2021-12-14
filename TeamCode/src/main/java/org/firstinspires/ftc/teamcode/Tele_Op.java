@@ -96,6 +96,8 @@ public class Tele_Op extends OpMode {
     public void start() {
         Runtime.getRuntime();
         robot.start();
+        robot.sensor_arm.cmd_Sensor_Arm_Servo_Up();
+        robot.capper.cmdPlungerGrab();
         robot.driveTrain.setMotorMode_RUN_WITHOUT_ENCODER();
     }
 

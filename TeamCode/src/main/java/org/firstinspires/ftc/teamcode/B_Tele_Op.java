@@ -96,6 +96,8 @@ public class B_Tele_Op extends OpMode {
         Runtime.getRuntime();
         robot.start();
         robot.driveTrain.setMotorMode_RUN_WITHOUT_ENCODER();
+        robot.sensor_arm.cmd_Sensor_Arm_Servo_Up();
+        robot.capper.cmdPlungerGrab();
     }
 
     //*********************************************************************************************

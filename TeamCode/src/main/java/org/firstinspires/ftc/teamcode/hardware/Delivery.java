@@ -31,7 +31,7 @@ public class Delivery extends BaseHardware {
 
     public static final int TCARRY_POS = 0;
     public static final int TLOAD_POS = 1440;
-    public static final int TLOW_POS = 1440;
+    public static final int TLOW_POS = 1380;
     public static final int TSPIN_POS = -1062;
     public static final int TMIDDLE_POS = 692;
     public static final int THIGH_POS = -2000;
@@ -42,7 +42,8 @@ public class Delivery extends BaseHardware {
     public static final double RRECEIVE_POS = 0;
     public static final double RCARRY_POS = 0;
     public static final double RSAFETY_POS = 0;
-    public static final double RDROP_POS = 1.0;
+    public static final double RDROP_POS = 0.71;
+    public static final double RDROP_LOW_POS = 0.8;
 
     public static final double OCATCH_POS = 0.65;
     public static final double OCLOSE_POS = 1;
@@ -76,6 +77,7 @@ public class Delivery extends BaseHardware {
         Trackmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Trackmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Rotateservo.setPosition(RRECEIVE_POS);
+
 
         Openservo.setPosition(OCLOSE_POS); // we need to set initial position
 
@@ -170,12 +172,12 @@ public class Delivery extends BaseHardware {
 
         if (DELIVERY_mode_Current == Mode.LOWER) {
             if (DELIVERY_mode_Prv != DELIVERY_mode_Current) {
-                if (Rotateservo.getPosition() == RDROP_POS) {
+                if (Rotateservo.getPosition() == RDROP_LOW_POS) {
                     MoveTrackMotor(TLOW_POS);
                 }
             }
 
-            MoveRotateServo(RDROP_POS);
+            MoveRotateServo(RDROP_LOW_POS);
             if (MoveRotateComplete && (runtime.milliseconds() > WaitTime)) {
                 MoveTrackMotor(TLOW_POS);
                 MoveRotateComplete = false;
@@ -211,6 +213,7 @@ public class Delivery extends BaseHardware {
             MoveRotateServo(RDROP_POS);
             if (MoveRotateComplete && (runtime.milliseconds() > WaitTime)) {
 
+
                 MoveTrackMotor(THIGH_POS);
                 MoveRotateComplete = false;
             }
@@ -219,12 +222,12 @@ public class Delivery extends BaseHardware {
         }
         if (DELIVERY_mode_Current == Mode.SHARED_LOW) {
             if (DELIVERY_mode_Prv != DELIVERY_mode_Current) {
-                if (Rotateservo.getPosition() == RDROP_POS) {
+                if (Rotateservo.getPosition() == RDROP_LOW_POS) {
                     MoveTrackMotor(TSHARED_LOW_POS);
                 }
             }
            // telemetry.log().add("Rotateservo tic count " + Rotateservo.getPosition());
-            MoveRotateServo(RDROP_POS);
+            MoveRotateServo(RDROP_LOW_POS);
             if (MoveRotateComplete && (runtime.milliseconds() > WaitTime)) {
 
                 MoveTrackMotor(TSHARED_LOW_POS);

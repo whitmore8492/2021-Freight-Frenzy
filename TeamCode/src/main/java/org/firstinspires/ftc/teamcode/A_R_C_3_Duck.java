@@ -29,7 +29,7 @@ public class A_R_C_3_Duck extends OpMode {
     private stage currentStage = stage._unknown;
     // declare auton power variables
     private double AUTO_DRIVE_TURBO_SPEED = DriveTrain.DRIVETRAIN_TURBOSPEED;
-    private double AUTO_DRIVE_SLOW_SPEED = 0.3;
+    private double AUTO_DRIVE_SLOW_SPEED = 0.35;
     private double AUTO_DRIVE_NORMAL_SPEED = DriveTrain.DRIVETRAIN_NORMALSPEED;
     private double AUTO_TURN_SPEED = DriveTrain.DRIVETRAIN_TURNSPEED;
     private int Loop_Count = 0;
@@ -120,7 +120,7 @@ public class A_R_C_3_Duck extends OpMode {
         }
         if (currentStage == stage._30_Drive_To_Carousel){
             if (robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_SLOW_SPEED, 45, 3.5);
+                robot.driveTrain.cmdDriveByGyro(0.4, 45, 3.5);
                 currentStage = stage._40_Caro_Start;
             }
 

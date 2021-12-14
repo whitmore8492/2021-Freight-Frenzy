@@ -13,7 +13,7 @@ public class Sensor_Arm extends BaseHardware {
     private static final String TAG = "8492-Sensor_Arm";
 
     private static final double UP_POS = 0;
-    private static final double READ_POS = .6;
+    private static final double READ_POS = .55;
     private Sensor_Arm.Mode Sensor_Arm_mode_Current = Mode.UP;
 
     public static final double R1N_Lower = 36;
@@ -204,7 +204,7 @@ private Rev2mDistanceSensor RRightDS = null;
         Double LeftSDistance = RLeftDS.getDistance(DistanceUnit.INCH);
         Double RightSDistance = RRightDS.getDistance(DistanceUnit.INCH);
         Double FrontSDistance = FrontDS.getDistance(DistanceUnit.INCH);
-        //telemetry.log().add("**LeftSDistance " + LeftSDistance);
+        telemetry.log().add("**LeftSDistance " + LeftSDistance);
         telemetry.log().add("**FrontSDistance " + FrontSDistance);
         telemetry.log().add("**RightSDistance " + RightSDistance);
         RobotLog.aa(TAG, "+++ In cmd_Read_Position_Short: Cur: " + CUR );
@@ -214,7 +214,7 @@ private Rev2mDistanceSensor RRightDS = null;
                 LeftSDistance = RLeftDS.getDistance(DistanceUnit.INCH);
                 RobotLog.aa(TAG, "++++LeftSDistance: " + LeftSDistance  + "Cur: " + CUR );
 
-                if (LeftSDistance <= MaxDetectRange){
+                if (LeftSDistance <= MaxDetectRange - 5){
                     return true;
                 }
                 else {
@@ -225,7 +225,7 @@ private Rev2mDistanceSensor RRightDS = null;
                 RightSDistance = RRightDS.getDistance(DistanceUnit.INCH);
                 RobotLog.aa(TAG, "++++RightSDistance: " + RightSDistance  + "Cur: " + CUR );
 
-                if (RightSDistance <= MaxDetectRange - 10){
+                if (RightSDistance <= MaxDetectRange - 8){
                     return true;
                 }
                 else {

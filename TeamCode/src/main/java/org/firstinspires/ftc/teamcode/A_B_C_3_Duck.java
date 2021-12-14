@@ -118,7 +118,7 @@ public class A_B_C_3_Duck extends OpMode {
         }
         if (currentStage == stage._30_Drive_To_Carousel){
             if (robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdDriveByGyro(AUTO_DRIVE_SLOW_SPEED, -45, 3.5);
+                robot.driveTrain.cmdDriveByGyro(0.4, -45, 3.5);
                 currentStage = stage._40_Caro_Start;
             }
 
@@ -227,7 +227,7 @@ public class A_B_C_3_Duck extends OpMode {
                 if (FOUNDTE == false){
                     robot.delivery.cmdDeliveryRun_LOWER();
                 }
-                if (runtime.milliseconds() > 1000){
+                if (runtime.milliseconds() > 1500){
                     robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_SLOW_SPEED, -90, -10); // 32.25 Of 32.25
                     currentStage = stage._90_Deliver;
                 }
@@ -261,7 +261,7 @@ public class A_B_C_3_Duck extends OpMode {
 
         if(currentStage == stage._130_Back_Up){
             if(robot.driveTrain.getcmdComplete()) {
-                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_NORMAL_SPEED, 165, -20);
+                robot.driveTrain.cmdDriveByGyro(-AUTO_DRIVE_NORMAL_SPEED, 165, -21);
                 currentStage = stage._135_Straighten;
             }
         }
