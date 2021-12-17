@@ -19,6 +19,8 @@ public class RobotComp extends BaseHardware {
     private ElapsedTime runtime = new ElapsedTime();
 
     private int Detection_Count = 0;
+    private int Hit_Count = 0;
+    private int Required_Hit_Count = 1;
 
     @Override
     public void init() {
@@ -155,17 +157,27 @@ public class RobotComp extends BaseHardware {
     public boolean cmd_Set_Delivery_By_Sensor_Short (Sensor_Arm.Side CUR, Delivery.Mode Pos){
         telemetry.log().add("**ReadPos " + Pos.toString());
         if(sensor_arm.cmd_Read_Position_Short(CUR)){
-            telemetry.log().add("**SettingPos " + Pos.toString());
-            delivery.cmdDeliveryRun(Pos);
+            Hit_Count++;
+            telemetry.log().add("**HitCount " + Hit_Count);
+            if (Hit_Count >= Required_Hit_Count) {
+                telemetry.log().add("**SettingPos " + Pos.toString());
+                delivery.cmdDeliveryRun(Pos);
 
-            return true;
+                return true;
+            }
+            else{
+                return false;
+            }
         }
             else{
                 return false;
         }
-
-
-
+    }
+    public void cmd_Set_Required_Hit_Count(int count){
+       Required_Hit_Count = count;
+    }
+    public void cmd_Reset_Hit_Count(){
+        Hit_Count = 0;
     }
 
 }

@@ -13,7 +13,7 @@ public class Sensor_Arm extends BaseHardware {
     private static final String TAG = "8492-Sensor_Arm";
 
     private static final double UP_POS = 0;
-    private static final double READ_POS = .55;
+    private static double READ_POS = .55;
     private Sensor_Arm.Mode Sensor_Arm_mode_Current = Mode.UP;
 
     public static final double R1N_Lower = 36;
@@ -225,7 +225,7 @@ private Rev2mDistanceSensor RRightDS = null;
                 RightSDistance = RRightDS.getDistance(DistanceUnit.INCH);
                 RobotLog.aa(TAG, "++++RightSDistance: " + RightSDistance  + "Cur: " + CUR );
 
-                if (RightSDistance <= MaxDetectRange - 8){
+                if (RightSDistance <= MaxDetectRange - 12){
                     return true;
                 }
                 else {
@@ -235,6 +235,10 @@ private Rev2mDistanceSensor RRightDS = null;
             default:
                 return false;
         }
+
+    }
+    public void Set_Read_Position(double Pos){
+        READ_POS = Pos;
 
     }
 
